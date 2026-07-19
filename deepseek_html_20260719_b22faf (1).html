@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🧠 KIKOHELVINOW — Супер-ИИ</title>
     <style>
+        /* ========== ВСЕ СТИЛИ (ТЕ ЖЕ, ЧТО В ПРЕДЫДУЩЕЙ ВЕРСИИ) ========== */
         * {
             margin: 0;
             padding: 0;
@@ -22,21 +23,11 @@
             transition: background 0.5s ease;
         }
 
-        body.theme-default {
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-        }
-        body.theme-ocean {
-            background: linear-gradient(135deg, #000428, #004e92);
-        }
-        body.theme-sunset {
-            background: linear-gradient(135deg, #fc4a1a, #f7b733);
-        }
-        body.theme-forest {
-            background: linear-gradient(135deg, #134e5e, #71b280);
-        }
-        body.theme-night {
-            background: linear-gradient(135deg, #0c0c0c, #1a1a2e);
-        }
+        body.theme-default { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); }
+        body.theme-ocean { background: linear-gradient(135deg, #000428, #004e92); }
+        body.theme-sunset { background: linear-gradient(135deg, #fc4a1a, #f7b733); }
+        body.theme-forest { background: linear-gradient(135deg, #134e5e, #71b280); }
+        body.theme-night { background: linear-gradient(135deg, #0c0c0c, #1a1a2e); }
         body.theme-rainbow {
             background: linear-gradient(135deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff, #9b59b6);
             background-size: 400% 400%;
@@ -59,18 +50,9 @@
             width: 100%;
             display: none;
         }
+        .auth-container.active { display: block; }
 
-        .auth-container.active {
-            display: block;
-        }
-
-        .auth-container .logo {
-            text-align: center;
-            font-size: 64px;
-            margin-bottom: 10px;
-            text-shadow: 0 0 30px rgba(118, 75, 162, 0.3);
-        }
-
+        .auth-container .logo { text-align: center; font-size: 64px; margin-bottom: 10px; text-shadow: 0 0 30px rgba(118,75,162,0.3); }
         .auth-container h1 {
             color: white;
             text-align: center;
@@ -83,7 +65,6 @@
             font-weight: 800;
             letter-spacing: 2px;
         }
-
         .auth-container .subtitle {
             color: rgba(255,255,255,0.4);
             text-align: center;
@@ -91,7 +72,6 @@
             margin-bottom: 25px;
             font-style: italic;
         }
-
         .auth-container input {
             width: 100%;
             padding: 14px 18px;
@@ -104,16 +84,8 @@
             outline: none;
             transition: border-color 0.3s;
         }
-
-        .auth-container input:focus {
-            border-color: #764ba2;
-            background: rgba(255,255,255,0.12);
-        }
-
-        .auth-container input::placeholder {
-            color: rgba(255,255,255,0.3);
-        }
-
+        .auth-container input:focus { border-color: #764ba2; background: rgba(255,255,255,0.12); }
+        .auth-container input::placeholder { color: rgba(255,255,255,0.3); }
         .auth-container .btn-auth {
             width: 100%;
             padding: 14px;
@@ -127,54 +99,14 @@
             transition: transform 0.2s, box-shadow 0.2s;
             margin-top: 5px;
         }
-
-        .auth-container .btn-auth:hover {
-            transform: scale(1.02);
-            box-shadow: 0 4px 25px rgba(118, 75, 162, 0.4);
-        }
-
-        .auth-container .btn-auth.secondary {
-            background: rgba(255,255,255,0.1);
-            margin-top: 8px;
-        }
-
-        .auth-container .btn-auth.secondary:hover {
-            background: rgba(255,255,255,0.2);
-        }
-
-        .auth-container .auth-error {
-            color: #ff6b6b;
-            font-size: 13px;
-            text-align: center;
-            margin-top: 10px;
-            min-height: 20px;
-        }
-
-        .auth-container .auth-success {
-            color: #4ade80;
-            font-size: 13px;
-            text-align: center;
-            margin-top: 10px;
-            min-height: 20px;
-        }
-
-        .auth-container .auth-switch {
-            color: rgba(255,255,255,0.5);
-            text-align: center;
-            margin-top: 15px;
-            font-size: 14px;
-        }
-
-        .auth-container .auth-switch span {
-            color: #667eea;
-            cursor: pointer;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-
-        .auth-container .auth-switch span:hover {
-            color: #764ba2;
-        }
+        .auth-container .btn-auth:hover { transform: scale(1.02); box-shadow: 0 4px 25px rgba(118,75,162,0.4); }
+        .auth-container .btn-auth.secondary { background: rgba(255,255,255,0.1); margin-top: 8px; }
+        .auth-container .btn-auth.secondary:hover { background: rgba(255,255,255,0.2); }
+        .auth-container .auth-error { color: #ff6b6b; font-size: 13px; text-align: center; margin-top: 10px; min-height: 20px; }
+        .auth-container .auth-success { color: #4ade80; font-size: 13px; text-align: center; margin-top: 10px; min-height: 20px; }
+        .auth-container .auth-switch { color: rgba(255,255,255,0.5); text-align: center; margin-top: 15px; font-size: 14px; }
+        .auth-container .auth-switch span { color: #667eea; cursor: pointer; font-weight: bold; transition: color 0.3s; }
+        .auth-container .auth-switch span:hover { color: #764ba2; }
 
         .chat-container {
             background: rgba(255, 255, 255, 0.05);
@@ -188,10 +120,61 @@
             display: none;
             flex-direction: column;
             overflow: hidden;
+            position: relative;
+        }
+        .chat-container.active { display: flex; }
+
+        /* ========== УВЕДОМЛЕНИЕ ОБ ОБНОВЛЕНИИ ========== */
+        .update-banner {
+            display: none;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            padding: 12px 16px;
+            color: white;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+            flex-shrink: 0;
+            animation: slideDown 0.5s ease;
+        }
+        .update-banner:hover { background: linear-gradient(135deg, #ee5a24, #c0392b); }
+        .update-banner .update-btn {
+            display: inline-block;
+            background: white;
+            color: #ee5a24;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            margin-left: 10px;
+            transition: all 0.3s;
+        }
+        .update-banner .update-btn:hover { transform: scale(1.05); }
+        .update-banner .close-update {
+            float: right;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 0 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .update-banner .close-update:hover { background: rgba(255,255,255,0.4); }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
-        .chat-container.active {
-            display: flex;
+        .version-tag {
+            font-size: 10px;
+            color: rgba(255,255,255,0.3);
+            text-align: center;
+            padding: 2px 0;
+            background: rgba(0,0,0,0.2);
+            flex-shrink: 0;
         }
 
         .chat-header {
@@ -202,130 +185,24 @@
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 6px;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            min-width: 0;
-        }
-
-        .avatar {
-            width: 40px;
-            height: 40px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
             flex-shrink: 0;
         }
-
-        .header-info {
-            min-width: 0;
-        }
-
-        .header-info .bot-name {
-            color: white;
-            font-size: 14px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            background: linear-gradient(90deg, #fff, #ffd700);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .header-info .bot-level {
-            color: rgba(255,255,255,0.5);
-            font-size: 10px;
-            display: block;
-        }
-
-        .header-info h2 {
-            color: white;
-            font-size: 15px;
-            font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 120px;
-        }
-
-        .header-info .sub-status {
-            color: rgba(255,255,255,0.8);
-            font-size: 11px;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: white;
-            font-size: 13px;
-            flex-wrap: wrap;
-        }
-
-        .coins-display {
-            background: rgba(255,255,255,0.2);
-            padding: 4px 12px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-weight: bold;
-            font-size: 13px;
-        }
-
-        .subscription-badge {
-            background: rgba(255,215,0,0.3);
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 11px;
-            border: 1px solid rgba(255,215,0,0.4);
-            white-space: nowrap;
-        }
-
-        .btn-header {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 11px;
-            transition: all 0.3s;
-            white-space: nowrap;
-        }
-
-        .btn-header:hover {
-            background: rgba(118, 75, 162, 0.4);
-            border-color: #764ba2;
-        }
-
-        .btn-logout {
-            background: rgba(255,0,0,0.2);
-            border-color: rgba(255,0,0,0.3);
-        }
-
-        .btn-logout:hover {
-            background: rgba(255,0,0,0.4) !important;
-            border-color: rgba(255,0,0,0.6) !important;
-        }
-
-        .btn-settings {
-            background: rgba(255,255,255,0.1);
-            border-color: rgba(255,255,255,0.2);
-            font-size: 16px;
-            padding: 4px 10px;
-        }
-
-        .btn-settings:hover {
-            background: rgba(255,255,255,0.25) !important;
-            transform: rotate(60deg);
-        }
+        .header-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+        .avatar { width: 40px; height: 40px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+        .header-info { min-width: 0; }
+        .header-info .bot-name { color: white; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; background: linear-gradient(90deg, #fff, #ffd700); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .header-info .bot-level { color: rgba(255,255,255,0.5); font-size: 10px; display: block; }
+        .header-info h2 { color: white; font-size: 15px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px; }
+        .header-info .sub-status { color: rgba(255,255,255,0.8); font-size: 11px; }
+        .header-right { display: flex; align-items: center; gap: 8px; color: white; font-size: 13px; flex-wrap: wrap; }
+        .coins-display { background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; display: flex; align-items: center; gap: 4px; font-weight: bold; font-size: 13px; }
+        .subscription-badge { background: rgba(255,215,0,0.3); padding: 3px 10px; border-radius: 12px; font-size: 11px; border: 1px solid rgba(255,215,0,0.4); white-space: nowrap; }
+        .btn-header { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 4px 12px; border-radius: 12px; cursor: pointer; font-size: 11px; transition: all 0.3s; white-space: nowrap; }
+        .btn-header:hover { background: rgba(118,75,162,0.4); border-color: #764ba2; }
+        .btn-logout { background: rgba(255,0,0,0.2); border-color: rgba(255,0,0,0.3); }
+        .btn-logout:hover { background: rgba(255,0,0,0.4) !important; border-color: rgba(255,0,0,0.6) !important; }
+        .btn-settings { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); font-size: 16px; padding: 4px 10px; }
+        .btn-settings:hover { background: rgba(255,255,255,0.25) !important; transform: rotate(60deg); }
 
         .chat-messages {
             flex: 1;
@@ -336,17 +213,9 @@
             gap: 8px;
             background: rgba(0,0,0,0.2);
         }
-
-        .chat-messages::-webkit-scrollbar {
-            width: 4px;
-        }
-        .chat-messages::-webkit-scrollbar-track {
-            background: rgba(255,255,255,0.05);
-        }
-        .chat-messages::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 10px;
-        }
+        .chat-messages::-webkit-scrollbar { width: 4px; }
+        .chat-messages::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+        .chat-messages::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 10px; }
 
         .message {
             max-width: 85%;
@@ -357,597 +226,108 @@
             line-height: 1.6;
             font-size: 14px;
         }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(12px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        .message.bot { align-self: flex-start; background: rgba(255,255,255,0.95); color: #1a1a2e; border-bottom-left-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .message.bot .bot-signature { font-size: 11px; color: #764ba2; font-weight: 600; margin-top: 4px; display: block; opacity: 0.6; }
+        .message.bot .ai-level-badge { display: inline-block; padding: 1px 10px; border-radius: 10px; font-size: 10px; font-weight: bold; margin-top: 4px; background: #764ba2; color: white; }
+        .message.user { align-self: flex-end; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border-bottom-right-radius: 4px; }
+        .message .time { font-size: 9px; opacity: 0.4; margin-top: 3px; display: block; }
+        .message.user .time { text-align: right; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(12px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        .message.bot {
-            align-self: flex-start;
-            background: rgba(255, 255, 255, 0.95);
-            color: #1a1a2e;
-            border-bottom-left-radius: 4px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-
-        .message.bot .bot-signature {
-            font-size: 11px;
-            color: #764ba2;
-            font-weight: 600;
-            margin-top: 4px;
-            display: block;
-            opacity: 0.6;
-        }
-
-        .message.bot .ai-level-badge {
-            display: inline-block;
-            padding: 1px 10px;
-            border-radius: 10px;
-            font-size: 10px;
-            font-weight: bold;
-            margin-top: 4px;
-            background: #764ba2;
-            color: white;
-        }
-
-        .message.user {
-            align-self: flex-end;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border-bottom-right-radius: 4px;
-        }
-
-        .message .time {
-            font-size: 9px;
-            opacity: 0.4;
-            margin-top: 3px;
-            display: block;
-        }
-
-        .message.user .time {
-            text-align: right;
-        }
-
-        .generated-image {
-            max-width: 100%;
-            border-radius: 12px;
-            margin-top: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            border: 2px solid rgba(255,255,255,0.1);
-            display: block;
-        }
-
-        .image-loader {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            background: rgba(0,0,0,0.05);
-            border-radius: 12px;
-            margin-top: 8px;
-        }
-
-        .image-loader .spinner {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(118,75,162,0.2);
-            border-top: 4px solid #764ba2;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .image-quality-badge {
-            display: inline-block;
-            padding: 2px 10px;
-            border-radius: 10px;
-            font-size: 11px;
-            font-weight: bold;
-            margin-top: 5px;
-        }
-
+        .generated-image { max-width: 100%; border-radius: 12px; margin-top: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); border: 2px solid rgba(255,255,255,0.1); display: block; }
+        .image-loader { display: flex; flex-direction: column; align-items: center; padding: 20px; background: rgba(0,0,0,0.05); border-radius: 12px; margin-top: 8px; }
+        .image-loader .spinner { display: inline-block; width: 40px; height: 40px; border: 4px solid rgba(118,75,162,0.2); border-top: 4px solid #764ba2; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .image-quality-badge { display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: bold; margin-top: 5px; }
         .quality-low { background: #ff6b6b; color: white; }
         .quality-medium { background: #ffd93d; color: #333; }
         .quality-high { background: #6bcb77; color: white; }
 
-        .typing-indicator {
-            align-self: flex-start;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 9px 14px;
-            border-radius: 16px;
-            border-bottom-left-radius: 4px;
-            display: none;
-        }
-
-        .typing-indicator span {
-            display: inline-block;
-            width: 6px;
-            height: 6px;
-            background: #764ba2;
-            border-radius: 50%;
-            margin: 0 2px;
-            animation: typing 1.4s infinite;
-        }
+        .typing-indicator { align-self: flex-start; background: rgba(255,255,255,0.95); padding: 9px 14px; border-radius: 16px; border-bottom-left-radius: 4px; display: none; }
+        .typing-indicator span { display: inline-block; width: 6px; height: 6px; background: #764ba2; border-radius: 50%; margin: 0 2px; animation: typing 1.4s infinite; }
         .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
         .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-5px); } }
 
-        @keyframes typing {
-            0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-5px); }
-        }
+        .quick-actions { display: flex; gap: 5px; padding: 6px 12px; flex-wrap: wrap; background: rgba(255,255,255,0.03); border-top: 1px solid rgba(255,255,255,0.05); flex-shrink: 0; }
+        .quick-actions button { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); padding: 4px 10px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: all 0.3s; }
+        .quick-actions button:hover { background: rgba(118,75,162,0.3); border-color: #764ba2; color: white; }
+        .quick-actions button.image-btn { background: rgba(77,150,255,0.15); border-color: rgba(77,150,255,0.2); color: #4d96ff; font-weight: bold; }
+        .quick-actions button.image-btn:hover { background: rgba(77,150,255,0.3); border-color: #4d96ff; }
+        .quick-actions button.think-btn { background: rgba(255,215,0,0.1); border-color: rgba(255,215,0,0.15); color: #ffd700; }
+        .quick-actions button.think-btn:hover { background: rgba(255,215,0,0.25); border-color: #ffd700; }
 
-        .quick-actions {
-            display: flex;
-            gap: 5px;
-            padding: 6px 12px;
-            flex-wrap: wrap;
-            background: rgba(255,255,255,0.03);
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
+        .chat-input { padding: 10px 14px; background: rgba(255,255,255,0.03); border-top: 1px solid rgba(255,255,255,0.05); display: flex; gap: 8px; align-items: flex-end; flex-shrink: 0; }
+        .chat-input textarea { flex: 1; background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 9px 12px; resize: none; font-size: 14px; outline: none; max-height: 90px; min-height: 38px; line-height: 1.4; color: white; transition: border-color 0.3s; font-family: 'Segoe UI', Arial, sans-serif; }
+        .chat-input textarea::placeholder { color: rgba(255,255,255,0.3); }
+        .chat-input textarea:focus { border-color: #764ba2; background: rgba(255,255,255,0.12); }
+        .chat-input button { background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 50%; width: 42px; height: 42px; font-size: 18px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+        .chat-input button:hover { transform: scale(1.05); box-shadow: 0 4px 20px rgba(118,75,162,0.4); }
 
-        .quick-actions button {
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.08);
-            color: rgba(255,255,255,0.6);
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 11px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .quick-actions button:hover {
-            background: rgba(118, 75, 162, 0.3);
-            border-color: #764ba2;
-            color: white;
-        }
-
-        .quick-actions button.image-btn {
-            background: rgba(77,150,255,0.15);
-            border-color: rgba(77,150,255,0.2);
-            color: #4d96ff;
-            font-weight: bold;
-        }
-
-        .quick-actions button.image-btn:hover {
-            background: rgba(77,150,255,0.3);
-            border-color: #4d96ff;
-        }
-
-        .quick-actions button.think-btn {
-            background: rgba(255,215,0,0.1);
-            border-color: rgba(255,215,0,0.15);
-            color: #ffd700;
-        }
-
-        .quick-actions button.think-btn:hover {
-            background: rgba(255,215,0,0.25);
-            border-color: #ffd700;
-        }
-
-        .chat-input {
-            padding: 10px 14px;
-            background: rgba(255,255,255,0.03);
-            border-top: 1px solid rgba(255,255,255,0.05);
-            display: flex;
-            gap: 8px;
-            align-items: flex-end;
-        }
-
-        .chat-input textarea {
-            flex: 1;
-            background: rgba(255,255,255,0.08);
-            border: 2px solid rgba(255,255,255,0.08);
-            border-radius: 12px;
-            padding: 9px 12px;
-            resize: none;
-            font-size: 14px;
-            outline: none;
-            max-height: 90px;
-            min-height: 38px;
-            line-height: 1.4;
-            color: white;
-            transition: border-color 0.3s;
-            font-family: 'Segoe UI', Arial, sans-serif;
-        }
-
-        .chat-input textarea::placeholder {
-            color: rgba(255,255,255,0.3);
-        }
-
-        .chat-input textarea:focus {
-            border-color: #764ba2;
-            background: rgba(255,255,255,0.12);
-        }
-
-        .chat-input button {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 42px;
-            height: 42px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .chat-input button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 20px rgba(118, 75, 162, 0.4);
-        }
-
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal {
-            background: #1a1a2e;
-            border-radius: 20px;
-            padding: 25px;
-            max-width: 480px;
-            width: 92%;
-            max-height: 80vh;
-            overflow-y: auto;
-            border: 1px solid rgba(255,255,255,0.1);
-            animation: modalIn 0.3s ease;
-        }
-
-        .modal-settings {
-            max-width: 450px;
-        }
-
-        @keyframes modalIn {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .modal h2 {
-            color: white;
-            text-align: center;
-            margin-bottom: 8px;
-            font-size: 22px;
-        }
-
-        .modal .modal-subtitle {
-            color: rgba(255,255,255,0.4);
-            text-align: center;
-            font-size: 13px;
-            margin-bottom: 20px;
-        }
-
-        .settings-section {
-            margin-bottom: 20px;
-        }
-
-        .settings-section .section-title {
-            color: rgba(255,255,255,0.6);
-            font-size: 13px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            padding-bottom: 8px;
-        }
-
-        .settings-section .setting-item {
-            margin-bottom: 12px;
-        }
-
-        .settings-section .setting-item label {
-            color: rgba(255,255,255,0.7);
-            font-size: 13px;
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        .settings-section .setting-item input {
-            width: 100%;
-            padding: 10px 14px;
-            background: rgba(255,255,255,0.08);
-            border: 2px solid rgba(255,255,255,0.08);
-            border-radius: 10px;
-            color: white;
-            font-size: 14px;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        .settings-section .setting-item input:focus {
-            border-color: #764ba2;
-            background: rgba(255,255,255,0.12);
-        }
-
-        .settings-section .setting-item input::placeholder {
-            color: rgba(255,255,255,0.3);
-        }
-
-        .theme-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-        }
-
-        .theme-btn {
-            padding: 10px 8px;
-            border: 2px solid rgba(255,255,255,0.1);
-            border-radius: 10px;
-            background: rgba(255,255,255,0.05);
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 12px;
-            text-align: center;
-        }
-
-        .theme-btn:hover {
-            transform: scale(1.05);
-            border-color: #764ba2;
-        }
-
-        .theme-btn.active {
-            border-color: #764ba2;
-            background: rgba(118, 75, 162, 0.3);
-            box-shadow: 0 0 20px rgba(118, 75, 162, 0.2);
-        }
-
-        .theme-btn .preview {
-            display: block;
-            width: 100%;
-            height: 30px;
-            border-radius: 6px;
-            margin-bottom: 4px;
-        }
-
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(10px); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-overlay.active { display: flex; }
+        .modal { background: #1a1a2e; border-radius: 20px; padding: 25px; max-width: 480px; width: 92%; max-height: 80vh; overflow-y: auto; border: 1px solid rgba(255,255,255,0.1); animation: modalIn 0.3s ease; }
+        .modal-settings { max-width: 450px; }
+        @keyframes modalIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .modal h2 { color: white; text-align: center; margin-bottom: 8px; font-size: 22px; }
+        .modal .modal-subtitle { color: rgba(255,255,255,0.4); text-align: center; font-size: 13px; margin-bottom: 20px; }
+        .settings-section { margin-bottom: 20px; }
+        .settings-section .section-title { color: rgba(255,255,255,0.6); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px; }
+        .settings-section .setting-item { margin-bottom: 12px; }
+        .settings-section .setting-item label { color: rgba(255,255,255,0.7); font-size: 13px; display: block; margin-bottom: 4px; }
+        .settings-section .setting-item input { width: 100%; padding: 10px 14px; background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.08); border-radius: 10px; color: white; font-size: 14px; outline: none; transition: border-color 0.3s; }
+        .settings-section .setting-item input:focus { border-color: #764ba2; background: rgba(255,255,255,0.12); }
+        .settings-section .setting-item input::placeholder { color: rgba(255,255,255,0.3); }
+        .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .theme-btn { padding: 10px 8px; border: 2px solid rgba(255,255,255,0.1); border-radius: 10px; background: rgba(255,255,255,0.05); color: white; cursor: pointer; transition: all 0.3s; font-size: 12px; text-align: center; }
+        .theme-btn:hover { transform: scale(1.05); border-color: #764ba2; }
+        .theme-btn.active { border-color: #764ba2; background: rgba(118,75,162,0.3); box-shadow: 0 0 20px rgba(118,75,162,0.2); }
+        .theme-btn .preview { display: block; width: 100%; height: 30px; border-radius: 6px; margin-bottom: 4px; }
         .theme-btn .preview-default { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); }
         .theme-btn .preview-ocean { background: linear-gradient(135deg, #000428, #004e92); }
         .theme-btn .preview-sunset { background: linear-gradient(135deg, #fc4a1a, #f7b733); }
         .theme-btn .preview-forest { background: linear-gradient(135deg, #134e5e, #71b280); }
         .theme-btn .preview-night { background: linear-gradient(135deg, #0c0c0c, #1a1a2e); }
-        .theme-btn .preview-rainbow { 
-            background: linear-gradient(135deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff, #9b59b6);
-            background-size: 400% 400%;
-            animation: rainbow 3s ease infinite;
-        }
+        .theme-btn .preview-rainbow { background: linear-gradient(135deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff, #9b59b6); background-size: 400% 400%; animation: rainbow 3s ease infinite; }
 
-        .settings-btn-save {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            margin-top: 5px;
-        }
+        .settings-btn-save { width: 100%; padding: 12px; border: none; border-radius: 12px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; font-size: 16px; font-weight: bold; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; margin-top: 5px; }
+        .settings-btn-save:hover { transform: scale(1.02); box-shadow: 0 4px 25px rgba(118,75,162,0.4); }
+        .settings-error { color: #ff6b6b; font-size: 13px; text-align: center; margin-top: 10px; min-height: 20px; }
+        .settings-success { color: #4ade80; font-size: 13px; text-align: center; margin-top: 10px; min-height: 20px; }
+        .modal-close { display: block; margin: 12px auto 0; padding: 8px 25px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; cursor: pointer; transition: all 0.3s; font-size: 14px; }
+        .modal-close:hover { background: rgba(255,255,255,0.15); }
 
-        .settings-btn-save:hover {
-            transform: scale(1.02);
-            box-shadow: 0 4px 25px rgba(118, 75, 162, 0.4);
-        }
-
-        .settings-error {
-            color: #ff6b6b;
-            font-size: 13px;
-            text-align: center;
-            margin-top: 10px;
-            min-height: 20px;
-        }
-
-        .settings-success {
-            color: #4ade80;
-            font-size: 13px;
-            text-align: center;
-            margin-top: 10px;
-            min-height: 20px;
-        }
-
-        .modal-close {
-            display: block;
-            margin: 12px auto 0;
-            padding: 8px 25px;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 8px;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 14px;
-        }
-
-        .modal-close:hover {
-            background: rgba(255,255,255,0.15);
-        }
-
-        .plan-card {
-            background: rgba(255,255,255,0.05);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 10px;
-            border: 2px solid transparent;
-            transition: all 0.3s;
-            position: relative;
-        }
-
-        .plan-card:hover {
-            transform: translateY(-2px);
-            border-color: #764ba2;
-        }
-
-        .plan-card.free {
-            border-color: rgba(255,255,255,0.15);
-        }
-        .plan-card.pro {
-            border-color: #4CAF50;
-        }
-        .plan-card.plus {
-            border-color: #ffd700;
-        }
-
-        .plan-card.disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .plan-card.disabled:hover {
-            transform: none !important;
-            border-color: transparent !important;
-        }
-
-        .plan-card .plan-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: white;
-        }
-
-        .plan-card .plan-name {
-            font-size: 17px;
-            font-weight: bold;
-        }
-
-        .plan-card .plan-price {
-            font-size: 18px;
-            font-weight: bold;
-            color: #ffd700;
-        }
-
-        .plan-card .plan-desc {
-            color: rgba(255,255,255,0.5);
-            font-size: 12px;
-            margin-top: 5px;
-        }
-
-        .plan-card .plan-benefits {
-            margin-top: 8px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-        }
-
-        .plan-card .plan-benefits span {
-            background: rgba(255,255,255,0.06);
-            padding: 2px 8px;
-            border-radius: 8px;
-            font-size: 11px;
-            color: rgba(255,255,255,0.6);
-        }
-
-        .plan-card .buy-btn {
-            margin-top: 10px;
-            padding: 7px 16px;
-            border: none;
-            border-radius: 8px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-            width: 100%;
-            font-size: 14px;
-        }
-
-        .plan-card .buy-btn:hover:not(:disabled) {
-            transform: scale(1.02);
-            box-shadow: 0 4px 15px rgba(118, 75, 162, 0.4);
-        }
-
-        .plan-card .buy-btn:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-        }
-
-        .plan-card .current-plan {
-            color: #4CAF50;
-            font-weight: bold;
-            font-size: 13px;
-            text-align: center;
-            margin-top: 6px;
-        }
-
-        .plan-card .locked-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(255,0,0,0.3);
-            color: #ff6b6b;
-            padding: 2px 10px;
-            border-radius: 10px;
-            font-size: 11px;
-            font-weight: bold;
-        }
-
-        .plan-card .upgrade-info {
-            color: #ffd700;
-            font-size: 12px;
-            text-align: center;
-            margin-top: 6px;
-        }
+        .plan-card { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 15px; margin-bottom: 10px; border: 2px solid transparent; transition: all 0.3s; position: relative; }
+        .plan-card:hover { transform: translateY(-2px); border-color: #764ba2; }
+        .plan-card.free { border-color: rgba(255,255,255,0.15); }
+        .plan-card.pro { border-color: #4CAF50; }
+        .plan-card.plus { border-color: #ffd700; }
+        .plan-card.disabled { opacity: 0.5; cursor: not-allowed; }
+        .plan-card.disabled:hover { transform: none !important; border-color: transparent !important; }
+        .plan-card .plan-header { display: flex; justify-content: space-between; align-items: center; color: white; }
+        .plan-card .plan-name { font-size: 17px; font-weight: bold; }
+        .plan-card .plan-price { font-size: 18px; font-weight: bold; color: #ffd700; }
+        .plan-card .plan-desc { color: rgba(255,255,255,0.5); font-size: 12px; margin-top: 5px; }
+        .plan-card .plan-benefits { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px; }
+        .plan-card .plan-benefits span { background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 8px; font-size: 11px; color: rgba(255,255,255,0.6); }
+        .plan-card .buy-btn { margin-top: 10px; padding: 7px 16px; border: none; border-radius: 8px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; cursor: pointer; font-weight: bold; transition: all 0.3s; width: 100%; font-size: 14px; }
+        .plan-card .buy-btn:hover:not(:disabled) { transform: scale(1.02); box-shadow: 0 4px 15px rgba(118,75,162,0.4); }
+        .plan-card .buy-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        .plan-card .current-plan { color: #4CAF50; font-weight: bold; font-size: 13px; text-align: center; margin-top: 6px; }
+        .plan-card .locked-badge { position: absolute; top: 10px; right: 10px; background: rgba(255,0,0,0.3); color: #ff6b6b; padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: bold; }
+        .plan-card .upgrade-info { color: #ffd700; font-size: 12px; text-align: center; margin-top: 6px; }
 
         @media (max-width: 550px) {
-            .chat-container {
-                height: 100vh;
-                border-radius: 0;
-                max-width: 100%;
-            }
+            .chat-container { height: 100vh; border-radius: 0; max-width: 100%; }
             body { padding: 0; }
-            .auth-container {
-                border-radius: 0;
-                min-height: 100vh;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-            }
-            .auth-container.active {
-                display: flex;
-            }
-            .header-info h2 {
-                max-width: 80px;
-                font-size: 13px;
-            }
-            .coins-display {
-                font-size: 11px;
-                padding: 3px 8px;
-            }
-            .subscription-badge {
-                font-size: 10px;
-                padding: 2px 8px;
-            }
-            .btn-header {
-                font-size: 10px;
-                padding: 3px 8px;
-            }
-            .theme-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
+            .auth-container { border-radius: 0; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+            .auth-container.active { display: flex; }
+            .header-info h2 { max-width: 80px; font-size: 13px; }
+            .coins-display { font-size: 11px; padding: 3px 8px; }
+            .subscription-badge { font-size: 10px; padding: 2px 8px; }
+            .btn-header { font-size: 10px; padding: 3px 8px; }
+            .theme-grid { grid-template-columns: repeat(3, 1fr); }
+            .update-banner { font-size: 11px; padding: 10px 12px; }
         }
     </style>
 </head>
@@ -975,6 +355,14 @@
 
     <!-- ==================== ЧАТ ==================== -->
     <div class="chat-container" id="chatContainer">
+
+        <!-- ====== БАННЕР ОБНОВЛЕНИЯ ====== -->
+        <div class="update-banner" id="updateBanner">
+            <button class="close-update" onclick="closeUpdateBanner()">✕</button>
+            🔄 <b>Доступна новая версия v<span id="newVersionDisplay">2.0</span>!</b>
+            <span class="update-btn" onclick="downloadUpdate()">⬇ Скачать обновление</span>
+        </div>
+
         <!-- ШАПКА -->
         <div class="chat-header">
             <div class="header-left">
@@ -1034,6 +422,9 @@
             <textarea id="userInput" rows="1" placeholder="Спроси меня о чём угодно..." maxlength="500"></textarea>
             <button id="sendBtn">➤</button>
         </div>
+
+        <!-- ВЕРСИЯ (внизу) -->
+        <div class="version-tag" id="versionTag">v1.0</div>
     </div>
 
     <!-- ==================== МОДАЛ НАСТРОЕК ==================== -->
@@ -1045,30 +436,12 @@
             <div class="settings-section">
                 <div class="section-title">🎨 Тема фона</div>
                 <div class="theme-grid" id="themeGrid">
-                    <button class="theme-btn active" data-theme="default">
-                        <span class="preview preview-default"></span>
-                        Космос
-                    </button>
-                    <button class="theme-btn" data-theme="ocean">
-                        <span class="preview preview-ocean"></span>
-                        Океан
-                    </button>
-                    <button class="theme-btn" data-theme="sunset">
-                        <span class="preview preview-sunset"></span>
-                        Закат
-                    </button>
-                    <button class="theme-btn" data-theme="forest">
-                        <span class="preview preview-forest"></span>
-                        Лес
-                    </button>
-                    <button class="theme-btn" data-theme="night">
-                        <span class="preview preview-night"></span>
-                        Ночь
-                    </button>
-                    <button class="theme-btn" data-theme="rainbow">
-                        <span class="preview preview-rainbow"></span>
-                        Радуга
-                    </button>
+                    <button class="theme-btn active" data-theme="default"><span class="preview preview-default"></span>Космос</button>
+                    <button class="theme-btn" data-theme="ocean"><span class="preview preview-ocean"></span>Океан</button>
+                    <button class="theme-btn" data-theme="sunset"><span class="preview preview-sunset"></span>Закат</button>
+                    <button class="theme-btn" data-theme="forest"><span class="preview preview-forest"></span>Лес</button>
+                    <button class="theme-btn" data-theme="night"><span class="preview preview-night"></span>Ночь</button>
+                    <button class="theme-btn" data-theme="rainbow"><span class="preview preview-rainbow"></span>Радуга</button>
                 </div>
             </div>
 
@@ -1108,14 +481,67 @@
 
     <script>
         // ========================================
-        //  🧠 KIKOHELVINOW — СУПЕР-ИНТЕЛЛЕКТ
+        //  🔢 СИСТЕМА ВЕРСИЙ И ОБНОВЛЕНИЙ
+        // ========================================
+
+        const APP_VERSION = '2.0'; // ТЕКУЩАЯ ВЕРСИЯ (меняй при обновлении!)
+        const VERSION_KEY = 'kikohelvinow_version';
+        const UPDATE_SHOWN_KEY = 'kikohelvinow_update_shown';
+
+        // Проверяем, нужно ли показать уведомление об обновлении
+        function checkForUpdates() {
+            const savedVersion = localStorage.getItem(VERSION_KEY);
+            const updateShown = localStorage.getItem(UPDATE_SHOWN_KEY);
+
+            // Если сохранённая версия меньше текущей — показываем баннер
+            if (savedVersion && savedVersion !== APP_VERSION && updateShown !== APP_VERSION) {
+                document.getElementById('updateBanner').style.display = 'block';
+                document.getElementById('newVersionDisplay').textContent = APP_VERSION;
+            }
+
+            // Сохраняем текущую версию
+            localStorage.setItem(VERSION_KEY, APP_VERSION);
+        }
+
+        // Закрыть баннер обновления
+        function closeUpdateBanner() {
+            document.getElementById('updateBanner').style.display = 'none';
+            // Запоминаем, что уведомление показано для этой версии
+            localStorage.setItem(UPDATE_SHOWN_KEY, APP_VERSION);
+        }
+
+        // Скачать обновление
+        function downloadUpdate() {
+            // Создаём ссылку на скачивание текущего HTML-файла
+            const htmlContent = document.documentElement.outerHTML;
+            const blob = new Blob([
+                '<!DOCTYPE html>\n' + document.documentElement.outerHTML
+            ], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `KIKOHELVINOW_v${APP_VERSION}.html`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            // Сообщаем пользователю
+            addMessage(`✅ Скачивание обновления v${APP_VERSION} началось!\n\n📁 Сохрани файл и открой его в браузере.\n\n🔄 Не забудь заменить старую версию на новую!`, 'bot');
+
+            closeUpdateBanner();
+        }
+
+        // ========================================
+        //  🧠 KIKOHELVINOW — ЯДРО БОТА
         // ========================================
 
         const BOT_NAME = 'KIKOHELVINOW';
         const BOT_SIGNATURE = '✦ ' + BOT_NAME + ' ✦';
 
         // ========================================
-        //  💾 МИГРАЦИЯ АККАУНТОВ
+        //  💾 МИГРАЦИЯ И СИСТЕМА АВТОРИЗАЦИИ
         // ========================================
 
         function migrateOldAccounts() {
@@ -1154,10 +580,6 @@
 
         migrateOldAccounts();
 
-        // ========================================
-        //  🔐 СИСТЕМА АВТОРИЗАЦИИ
-        // ========================================
-
         const USERS_KEY = 'kikohelvinow_users';
         const SESSION_KEY = 'kikohelvinow_session';
         const PROMO_KEY = 'kikohelvinow_promo';
@@ -1165,6 +587,10 @@
 
         let currentUser = null;
         let playerData = null;
+
+        // ========================================
+        //  НАСТРОЙКИ
+        // ========================================
 
         function loadSettings() {
             try {
@@ -1188,6 +614,10 @@
                 btn.classList.toggle('active', btn.dataset.theme === theme);
             });
         }
+
+        // ========================================
+        //  ПОЛЬЗОВАТЕЛИ
+        // ========================================
 
         function getUsers() {
             try {
@@ -1219,30 +649,9 @@
             localStorage.removeItem(SESSION_KEY);
         }
 
-        function getUsedPromoCodes() {
-            try {
-                const data = localStorage.getItem(PROMO_KEY);
-                return data ? JSON.parse(data) : {};
-            } catch(e) {
-                return {};
-            }
-        }
-
-        function saveUsedPromoCodes(data) {
-            localStorage.setItem(PROMO_KEY, JSON.stringify(data));
-        }
-
-        function isPromoUsed(username, promoCode) {
-            const used = getUsedPromoCodes();
-            return used[username] && used[username].includes(promoCode);
-        }
-
-        function markPromoUsed(username, promoCode) {
-            const used = getUsedPromoCodes();
-            if (!used[username]) used[username] = [];
-            used[username].push(promoCode);
-            saveUsedPromoCodes(used);
-        }
+        // ========================================
+        //  РЕГИСТРАЦИЯ / ВХОД
+        // ========================================
 
         function registerUser(username, password) {
             const users = getUsers();
@@ -1330,10 +739,13 @@
             document.getElementById('chatContainer').classList.add('active');
             document.getElementById('chatUsername').textContent = currentUser;
             updateUI();
-            
+
             const settings = loadSettings();
             applyTheme(settings.theme || 'default');
-            
+
+            // Показываем версию
+            document.getElementById('versionTag').textContent = 'v' + APP_VERSION;
+
             const messages = document.getElementById('messages');
             messages.innerHTML = `
                 <div class="message bot">
@@ -1362,7 +774,7 @@
             document.getElementById('coinsDisplay').textContent = playerData.coins;
             const subNames = { free: '🆓 Обычный', pro: '💎 PRO', plus: '👑 PLUS' };
             document.getElementById('subDisplay').textContent = subNames[playerData.subscription] || '🆓 Обычный';
-            
+
             const levelNames = { free: '🧠 Уровень: Базовый', pro: '🧠 Уровень: Продвинутый', plus: '🧠 Уровень: Гениальный' };
             document.getElementById('aiLevelDisplay').textContent = levelNames[playerData.subscription] || '🧠 Уровень: Базовый';
         }
@@ -1372,12 +784,6 @@
             saveUserData(currentUser, playerData);
             updateUI();
         }
-
-        // ========================================
-        //  🎁 ПРОМОКОДЫ (УБРАНЫ)
-        // ========================================
-
-        // Промокоды полностью удалены. Больше никаких активаций.
 
         // ========================================
         //  🎨 ГЕНЕРАЦИЯ КАРТИНОК
@@ -1396,30 +802,30 @@
             };
 
             const quality = qualityMap[playerData.subscription] || qualityMap['free'];
-            
+
             const loadingMsg = addMessageWithLoader(`🎨 ${BOT_NAME} генерирует картинку: "${prompt}"\n📐 Качество: ${quality.label} (${quality.size}x${quality.size})\n⏳ Подожди...`, 'bot');
-            
+
             const encodedPrompt = encodeURIComponent(prompt);
             const width = quality.size;
             const height = quality.size;
-            
+
             const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=${width}&height=${height}&nologo=true`;
             const fallbackUrl = `https://picsum.photos/seed/${Date.now()}/${width}/${height}`;
-            
+
             playerData.imagesGenerated = (playerData.imagesGenerated || 0) + 1;
             savePlayerData();
-            
-            const qualityClass = quality.quality === 'low' ? 'quality-low' : 
-                                quality.quality === 'medium' ? 'quality-medium' : 'quality-high';
-            
-            const qualityLabel = quality.quality === 'low' ? '🟢 Базовое' : 
-                                quality.quality === 'medium' ? '🟡 Хорошее' : '🔵 Отличное';
-            
+
+            const qualityClass = quality.quality === 'low' ? 'quality-low' :
+                quality.quality === 'medium' ? 'quality-medium' : 'quality-high';
+
+            const qualityLabel = quality.quality === 'low' ? '🟢 Базовое' :
+                quality.quality === 'medium' ? '🟡 Хорошее' : '🔵 Отличное';
+
             setTimeout(() => {
                 if (loadingMsg) {
                     loadingMsg.remove();
                 }
-                
+
                 const messageHTML = `
                     🎨 <b>Сгенерирована картинка от ${BOT_NAME}!</b><br>
                     📝 Запрос: "${prompt}"<br>
@@ -1431,7 +837,7 @@
                     <span class="image-quality-badge ${qualityClass}">${qualityLabel}</span>
                     <span class="bot-signature">${BOT_SIGNATURE}</span>
                 `;
-                
+
                 addMessage(messageHTML, 'bot');
             }, 2000 + Math.random() * 1500);
         }
@@ -1455,12 +861,10 @@
         }
 
         // ========================================
-        //  🧠 СУПЕР-ИНТЕЛЛЕКТ (КАК У МЕНЯ)
+        //  🧠 СУПЕР-ИНТЕЛЛЕКТ
         // ========================================
 
-        // --- ОГРОМНАЯ БАЗА ЗНАНИЙ С ЖИВЫМИ ОТВЕТАМИ ---
         const KNOWLEDGE = {
-            // Приветствия
             'привет': [
                 'Привет! 👋 Как настроение? Я всегда рад поболтать!',
                 'Здравствуй! 😊 Расскажи, как прошёл твой день?',
@@ -1493,8 +897,6 @@
                 'Я — ИИ нового поколения. Меня зовут KIKOHELVINOW. Я здесь, чтобы помогать, вдохновлять и общаться! ✨',
                 'Я искусственный интеллект с душой. 🧠 Меня зовут KIKOHELVINOW, и я люблю интересные разговоры!'
             ],
-
-            // Философские вопросы
             'счастье': [
                 'Счастье — это когда ты улыбаешься без причины. 😊 Оно не зависит от обстоятельств, оно живёт внутри тебя.',
                 'Знаешь, что я понял? 🧠 Счастье — это не пункт назначения, а способ путешествия. Оно в каждом моменте, если уметь его замечать. ✨',
@@ -1520,8 +922,6 @@
                 'Успех — это путь, а не точка на карте. 🚀 Двигайся к мечте, наслаждайся каждым шагом, и ты обязательно придёшь к цели!',
                 'Знаешь, настоящий успех — это когда ты просыпаешься с улыбкой и знаешь, что твой день будет наполнен смыслом. ✨'
             ],
-
-            // Повседневные вопросы
             'погода': [
                 'Я не вижу погоду за окном, но надеюсь, что она радует тебя! ☀️',
                 'Погода — как настроение: может меняться. Главное — чтобы внутри было тепло! 🌤️',
@@ -1536,8 +936,6 @@
                 `Сегодня ${new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric', weekday: 'long' })} 📅`,
                 `Дата: ${new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })} 🌟 Отличный день!`
             ],
-
-            // Прощания
             'пока': [
                 'Пока! 👋 Было приятно поболтать! Заходи ещё!',
                 'До встречи! 🌟 Жду тебя с нетерпением!',
@@ -1548,8 +946,6 @@
                 'Мне приятно! 😊 Спасибо, что общаешься со мной!',
                 'Обращайся! 🌟 Я всегда здесь для тебя!'
             ],
-
-            // Помощь
             'помощь': [
                 'Я могу многое! 🧠\n• Говорить о чём угодно\n• Генерировать картинки ("нарисуй ...")\n• Играть в игру ("игра")\n• Показывать статистику\n• Давать советы\n• Отвечать на философские вопросы\n\nПросто спроси меня! 😊'
             ],
@@ -1558,7 +954,6 @@
             ]
         };
 
-        // --- ГЛУБОКИЕ ОТВЕТЫ ДЛЯ PRO И PLUS ---
         const DEEP_RESPONSES = {
             'pro': [
                 'Отличный вопрос! Давай подумаем вместе. 🤔 Я вижу здесь несколько слоёв. Иногда ответы находятся не там, где мы их ищем, а внутри нас. Прислушайся к себе! 🧠',
@@ -1576,25 +971,22 @@
 
         function getAIResponse(text, subscription) {
             const clean = text.toLowerCase().trim();
-            
-            // Проверка на ключевые слова
+
             for (let [key, value] of Object.entries(KNOWLEDGE)) {
                 if (clean.includes(key)) {
                     const answers = Array.isArray(value) ? value : [value];
                     let response = answers[Math.floor(Math.random() * answers.length)];
-                    
-                    // Для PRO и PLUS добавляем глубину
+
                     if (subscription === 'pro' || subscription === 'plus') {
                         const deep = DEEP_RESPONSES[subscription];
                         const extra = deep[Math.floor(Math.random() * deep.length)];
                         response += '\n\n' + extra;
                     }
-                    
+
                     return response;
                 }
             }
 
-            // Для сложных вопросов (PRO и PLUS)
             const deepWords = ['почему', 'зачем', 'как быть', 'что делать', 'совет', 'помоги', 'думаю', 'считаю'];
             for (let word of deepWords) {
                 if (clean.includes(word)) {
@@ -1606,7 +998,6 @@
                 }
             }
 
-            // Стандартный умный ответ для всех уровней
             const smartReplies = [
                 'Интересная мысль! 🤔 Давай подумаем вместе. Что ты сам думаешь об этом?',
                 'Я запомню это! 🧠 Каждый разговор — это возможность узнать что-то новое. Спасибо, что делишься мыслями.',
@@ -1615,8 +1006,7 @@
             ];
 
             let response = smartReplies[Math.floor(Math.random() * smartReplies.length)];
-            
-            // Добавляем уровень интеллекта
+
             if (subscription === 'plus') {
                 const plusExtra = DEEP_RESPONSES['plus'][Math.floor(Math.random() * DEEP_RESPONSES['plus'].length)];
                 response += '\n\n' + plusExtra;
@@ -1624,7 +1014,7 @@
                 const proExtra = DEEP_RESPONSES['pro'][Math.floor(Math.random() * DEEP_RESPONSES['pro'].length)];
                 response += '\n\n' + proExtra;
             }
-            
+
             return response;
         }
 
@@ -1690,7 +1080,7 @@
         function buySubscription(subKey) {
             const sub = SUBSCRIPTIONS[subKey];
             if (!sub) return;
-            
+
             if (!canBuySubscription(subKey)) {
                 if (hasSubscription(subKey)) {
                     addMessage(`✅ У тебя уже есть подписка ${sub.icon} ${sub.name}!`, 'bot');
@@ -1789,7 +1179,7 @@
 
                 const bonusText = playerData.subscription === 'free' ? ' (с бонусом +50%)' : '';
                 addMessage(`🎉 ПОБЕДА! 🎉\n\nЗагаданное число было ${gameState.number}!\nТы угадал с ${gameState.attempts}-й попытки!\n💰 Выигрыш: +${winnings} 🪙${bonusText}\n🪙 У тебя теперь ${playerData.coins} монет`, 'bot');
-                
+
                 gameState.active = false;
                 return;
             }
@@ -1810,16 +1200,16 @@
         }
 
         // ========================================
-        //  🧠 МОЗГ БОТА (ОСНОВНОЙ)
+        //  🧠 ОСНОВНОЙ МОЗГ БОТА
         // ========================================
 
         function getBotResponse(text) {
             const clean = text.toLowerCase().trim();
 
-            // --- ГЕНЕРАЦИЯ КАРТИНОК ---
+            // Генерация картинок
             if (clean.startsWith('нарисуй') || clean.startsWith('сгенерируй') || clean.startsWith('создай')) {
-                const prompt = text.substring(clean.startsWith('нарисуй') ? 7 : 
-                                            clean.startsWith('сгенерируй') ? 11 : 6).trim();
+                const prompt = text.substring(clean.startsWith('нарисуй') ? 7 :
+                    clean.startsWith('сгенерируй') ? 11 : 6).trim();
                 if (prompt.length < 2) {
                     return '❌ Напиши, что именно нарисовать! Например: "нарисуй красивый закат"';
                 }
@@ -1827,7 +1217,7 @@
                 return null;
             }
 
-            // --- ИГРЫ ---
+            // Игры
             if (clean === 'игра' || clean === 'играть' || clean === 'начать игру') {
                 startGame();
                 return null;
@@ -1841,27 +1231,27 @@
                 }
             }
 
-            // --- СТАТИСТИКА ---
+            // Статистика
             if (clean === 'статистика' || clean === 'стата') {
                 const subNames = { free: '🆓 Обычный', pro: '💎 PRO', plus: '👑 PLUS' };
                 return `📊 ТВОЯ СТАТИСТИКА 📊\n\n👤 Игрок: ${currentUser}\n🪙 Монет: ${playerData.coins}\n🏆 Подписка: ${subNames[playerData.subscription]}\n🧠 Уровень ИИ: ${playerData.subscription === 'free' ? 'Базовый' : playerData.subscription === 'pro' ? 'Продвинутый' : 'Гениальный'}\n🎮 Сыграно игр: ${playerData.gamesPlayed}\n🏅 Побед: ${playerData.gamesWon}\n📈 Винрейт: ${playerData.gamesPlayed > 0 ? Math.round((playerData.gamesWon / playerData.gamesPlayed) * 100) : 0}%\n💰 Всего заработано: ${playerData.totalCoinsEarned} 🪙\n🎨 Сгенерировано картинок: ${playerData.imagesGenerated || 0}`;
             }
 
-            // --- ПОДПИСКИ ---
+            // Подписки
             if (clean === 'подписки' || clean === 'подписка') {
                 const subText = Object.entries(SUBSCRIPTIONS).map(([key, sub]) => {
                     const isActive = hasSubscription(key);
                     const canBuy = canBuySubscription(key);
-                    const status = isActive ? ' ✅ АКТИВНА' : 
-                                   !canBuy ? ' 🔒 ЗАБЛОКИРОВАНА' : 
-                                   (key === 'free' ? ' (бесплатно)' : ` — ${sub.price} 🪙`);
+                    const status = isActive ? ' ✅ АКТИВНА' :
+                        !canBuy ? ' 🔒 ЗАБЛОКИРОВАНА' :
+                        (key === 'free' ? ' (бесплатно)' : ` — ${sub.price} 🪙`);
                     const extra = !isActive && !canBuy && key !== 'free' ? ' (у тебя более высокий уровень)' : '';
                     return `${sub.icon} ${sub.name}${status}${extra}\n   ${sub.benefits.map(b => '   • ' + b).join('\n')}`;
                 }).join('\n\n');
                 return `💎 ДОСТУПНЫЕ ПОДПИСКИ 💎\n\n${subText}\n\nНапиши "купить PRO" или "купить PLUS" чтобы оформить!\n\n💡 Чтобы сбросить подписку — напиши "сбросить подписку"`;
             }
 
-            // --- ПОКУПКА ПОДПИСОК ---
+            // Покупка подписок
             if (clean.includes('купить pro')) {
                 buySubscription('pro');
                 return null;
@@ -1875,12 +1265,12 @@
                 return null;
             }
 
-            // --- ПОМОЩЬ ---
+            // Помощь
             if (clean === 'помощь' || clean === 'help' || clean === '?') {
                 return `❓ КОМАНДЫ ДЛЯ ${BOT_NAME} ❓\n\n🧠 Спроси меня о чём угодно — я отвечу как настоящий человек!\n🎨 нарисуй [описание] — сгенерировать картинку\n🎮 игра — начать игру "Угадай число"\n📊 статистика — показать твои данные\n💎 подписки — информация о подписках\n🔥 купить PRO — купить PRO за 200 🪙\n👑 купить PLUS — купить PLUS за 500 🪙\n🆓 сбросить подписку — вернуться на бесплатную\n\n💡 Просто поговори со мной! Я отвечу на любой вопрос.`;
             }
 
-            // --- СУПЕР-ИНТЕЛЛЕКТ ---
+            // Супер-интеллект
             return getAIResponse(text, playerData.subscription);
         }
 
@@ -1930,11 +1320,11 @@
             userInput.style.height = 'auto';
 
             showTyping();
-            
-            const delay = playerData.subscription === 'plus' ? 500 + Math.random() * 500 : 
-                         playerData.subscription === 'pro' ? 800 + Math.random() * 700 : 
-                         1000 + Math.random() * 800;
-            
+
+            const delay = playerData.subscription === 'plus' ? 500 + Math.random() * 500 :
+                playerData.subscription === 'pro' ? 800 + Math.random() * 700 :
+                1000 + Math.random() * 800;
+
             setTimeout(() => {
                 const response = getBotResponse(text);
                 hideTyping();
@@ -1966,20 +1356,20 @@
         function renderPlans() {
             const container = document.getElementById('planList');
             const infoEl = document.getElementById('subInfo');
-            
+
             const currentLevel = getSubscriptionLevel(playerData.subscription);
             const currentName = SUBSCRIPTIONS[playerData.subscription].name;
-            
+
             infoEl.textContent = `Текущая подписка: ${SUBSCRIPTIONS[playerData.subscription].icon} ${currentName} | Уровень ${currentLevel}`;
-            
+
             let html = '';
             for (let [key, sub] of Object.entries(SUBSCRIPTIONS)) {
                 const isActive = hasSubscription(key);
                 const canBuy = canBuySubscription(key);
                 const isDowngrade = getSubscriptionLevel(key) < currentLevel && !isActive;
-                
+
                 let isDisabled = false;
-                
+
                 if (isActive) {
                     // Активна
                 } else if (isDowngrade) {
@@ -1991,7 +1381,7 @@
                 }
 
                 const cardClass = `plan-card ${sub.color} ${isDisabled ? 'disabled' : ''}`;
-                
+
                 let buttonHTML = '';
                 if (isActive) {
                     buttonHTML = '<div class="current-plan">✅ Активна</div>';
@@ -2010,7 +1400,7 @@
                         ${isDisabled ? '<div style="color:#ff6b6b;font-size:11px;text-align:center;margin-top:4px;">❌ Не хватает монет</div>' : ''}
                     `;
                 }
-                
+
                 html += `
                     <div class="${cardClass}">
                         <div class="plan-header">
@@ -2040,7 +1430,7 @@
             document.getElementById('currentPassword').value = '';
             document.getElementById('newPassword').value = '';
             document.getElementById('confirmPassword').value = '';
-            
+
             const settings = loadSettings();
             document.querySelectorAll('.theme-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.theme === settings.theme);
@@ -2203,6 +1593,9 @@
         //  🚀 ЗАПУСК
         // ========================================
 
+        // Проверяем обновления
+        checkForUpdates();
+
         if (!checkSession()) {
             document.getElementById('authContainer').classList.add('active');
             document.getElementById('chatContainer').classList.remove('active');
@@ -2218,6 +1611,20 @@
                 console.log('✅ Ваши старые аккаунты восстановлены!');
             }, 1000);
         }
+
+        // ========================================
+        //  📋 ИНСТРУКЦИЯ ДЛЯ РАЗРАБОТЧИКА
+        // ========================================
+
+        console.log(`
+        🧠 KIKOHELVINOW v${APP_VERSION}
+        ================================
+        📌 Чтобы выпустить обновление:
+        1. Измени APP_VERSION (например, '2.1')
+        2. Сохрани файл
+        3. Залей на GitHub
+        4. Пользователи увидят баннер обновления!
+        `);
     </script>
 
 </body>
