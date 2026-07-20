@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>👥 KIKOHELVINOW v1.1 — Друзья</title>
     <style>
-        /* ===== ГЛОБАЛЬНЫЕ СТИЛИ ===== */
         * {
             margin: 0;
             padding: 0;
@@ -23,7 +22,6 @@
             transition: background 0.5s ease;
         }
 
-        /* ===== ТЕМЫ ===== */
         body.theme-default {
             background: #0a0a0f;
         }
@@ -72,7 +70,6 @@
             }
         }
 
-        /* ===== АВТОРИЗАЦИЯ ===== */
         .auth-container {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(20px);
@@ -183,7 +180,6 @@
             color: #764ba2;
         }
 
-        /* ===== ОСНОВНОЙ ЧАТ ===== */
         .chat-container {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(20px);
@@ -201,9 +197,8 @@
             display: flex;
         }
 
-        /* ===== БОКОВАЯ ПАНЕЛЬ (ДРУЗЬЯ) ===== */
         .sidebar {
-            width: 220px;
+            width: 240px;
             min-width: 180px;
             background: rgba(0, 0, 0, 0.3);
             border-right: 1px solid rgba(255, 255, 255, 0.05);
@@ -259,7 +254,7 @@
         }
 
         .friend-item {
-            padding: 10px 16px;
+            padding: 8px 12px;
             color: rgba(255, 255, 255, 0.6);
             cursor: pointer;
             transition: all 0.3s;
@@ -283,14 +278,85 @@
             overflow: hidden;
             text-overflow: ellipsis;
             max-width: 100px;
+            flex: 1;
         }
         .friend-item .friend-status {
             font-size: 10px;
             opacity: 0.4;
+            margin: 0 4px;
         }
         .friend-item .friend-status.online {
             color: #4ade80;
             opacity: 0.8;
+        }
+        .friend-item .friend-actions {
+            display: flex;
+            gap: 4px;
+        }
+        .friend-item .friend-actions button {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            font-size: 12px;
+            padding: 2px 4px;
+            transition: all 0.3s;
+            border-radius: 4px;
+        }
+        .friend-item .friend-actions button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        .friend-item .friend-actions .block-btn:hover {
+            color: #ff6b6b;
+            background: rgba(255, 0, 0, 0.1);
+        }
+        .friend-item .friend-actions .delete-btn:hover {
+            color: #ffd93d;
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .friend-item .friend-request-actions {
+            display: flex;
+            gap: 4px;
+        }
+        .friend-item .friend-request-actions button {
+            padding: 2px 10px;
+            border: none;
+            border-radius: 12px;
+            font-size: 11px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .friend-item .friend-request-actions .accept-btn {
+            background: #4CAF50;
+            color: white;
+        }
+        .friend-item .friend-request-actions .accept-btn:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+        .friend-item .friend-request-actions .decline-btn {
+            background: rgba(255, 0, 0, 0.2);
+            color: #ff6b6b;
+        }
+        .friend-item .friend-request-actions .decline-btn:hover {
+            background: rgba(255, 0, 0, 0.3);
+            transform: scale(1.05);
+        }
+
+        .friend-item .request-label {
+            font-size: 10px;
+            color: #ffd700;
+            opacity: 0.6;
+            margin-right: 6px;
+        }
+        .friend-item.blocked {
+            opacity: 0.4;
+        }
+        .friend-item.blocked .friend-name {
+            text-decoration: line-through;
         }
 
         .add-friend-section {
@@ -325,7 +391,7 @@
             background: linear-gradient(135deg, #667eea, #764ba2);
             border: none;
             color: white;
-            padding: 8px 12px;
+            padding: 8px 14px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 13px;
@@ -338,7 +404,6 @@
             box-shadow: 0 4px 20px rgba(118, 75, 162, 0.3);
         }
 
-        /* ===== ОСНОВНАЯ ОБЛАСТЬ ЧАТА ===== */
         .main-chat {
             flex: 1;
             display: flex;
@@ -450,7 +515,6 @@
             transform: rotate(60deg);
         }
 
-        /* ===== СООБЩЕНИЯ ===== */
         .chat-messages {
             flex: 1;
             padding: 16px 20px;
@@ -536,6 +600,37 @@
             font-family: 'Segoe UI', sans-serif;
             text-transform: uppercase;
             letter-spacing: 1px;
+        }
+        .message .friend-request-msg {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+        .message .friend-request-msg button {
+            padding: 4px 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .message .friend-request-msg .accept-btn {
+            background: #4CAF50;
+            color: white;
+        }
+        .message .friend-request-msg .accept-btn:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+        .message .friend-request-msg .decline-btn {
+            background: rgba(255, 0, 0, 0.15);
+            color: #ff6b6b;
+        }
+        .message .friend-request-msg .decline-btn:hover {
+            background: rgba(255, 0, 0, 0.25);
+            transform: scale(1.05);
         }
         .message.user {
             align-self: flex-end;
@@ -728,7 +823,6 @@
             font-style: italic;
         }
 
-        /* ===== МОДАЛЫ ===== */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -1061,15 +1155,19 @@
 
         @media (max-width: 650px) {
             .sidebar {
-                width: 140px;
+                width: 150px;
                 min-width: 100px;
             }
             .friend-item {
                 font-size: 11px;
-                padding: 8px 10px;
+                padding: 6px 8px;
             }
             .friend-item .friend-name {
                 max-width: 60px;
+            }
+            .friend-item .friend-actions button {
+                font-size: 10px;
+                padding: 1px 3px;
             }
             .add-friend-section input {
                 font-size: 10px;
@@ -1165,22 +1263,30 @@
                 font-size: 9px;
                 padding: 1px 6px;
             }
+            .friend-item .friend-request-actions button {
+                font-size: 9px;
+                padding: 1px 6px;
+            }
         }
 
         @media (max-width: 450px) {
             .sidebar {
-                width: 100px;
+                width: 110px;
                 min-width: 70px;
             }
             .friend-item {
                 font-size: 10px;
-                padding: 6px 8px;
+                padding: 5px 6px;
             }
             .friend-item .friend-name {
                 max-width: 40px;
             }
             .friend-item .friend-status {
                 font-size: 8px;
+            }
+            .friend-item .friend-actions button {
+                font-size: 9px;
+                padding: 1px 2px;
             }
             .add-friend-section {
                 flex-direction: column;
@@ -1204,7 +1310,7 @@
     <div class="auth-container active" id="authContainer">
         <div class="logo">👥</div>
         <h1>KIKOHELVINOW</h1>
-        <p class="subtitle">✨ v1.1 — Друзья и общение ✨</p>
+        <p class="subtitle">✨ v1.1 — Заявки и управление ✨</p>
         <div id="authForm">
             <input type="text" id="authUsername" placeholder="👤 Имя пользователя" autocomplete="username">
             <input type="password" id="authPassword" placeholder="🔑 Пароль" autocomplete="current-password">
@@ -1220,7 +1326,6 @@
 
     <!-- ===== ЧАТ ===== -->
     <div class="chat-container" id="chatContainer">
-        <!-- БОКОВАЯ ПАНЕЛЬ (ДРУЗЬЯ) -->
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <span class="title">👥 Друзья</span>
@@ -1234,11 +1339,10 @@
             </div>
             <div class="add-friend-section">
                 <input type="text" id="friendCodeInput" placeholder="Код друга" maxlength="6" style="text-transform:uppercase;">
-                <button onclick="addFriend()">➕</button>
+                <button onclick="sendFriendRequest()">➕</button>
             </div>
         </div>
 
-        <!-- ОСНОВНАЯ ОБЛАСТЬ ЧАТА -->
         <div class="main-chat">
             <div class="chat-header">
                 <div class="header-left">
@@ -1259,15 +1363,12 @@
             <div class="chat-messages" id="messages">
                 <div class="message bot">
                     🧠 <b>Привет! Я KIKOHELVINOW v1.1.</b><br><br>
-                    👥 <b>Новая фича — ДРУЗЬЯ!</b><br>
-                    • Слева твой <b>код дружбы</b> — поделись им с друзьями<br>
-                    • Введи код друга в поле <b>"Код друга"</b> и нажми ➕<br>
-                    • Общайся с друзьями в личных чатах!<br><br>
-                    Я умею:<br>
-                    💻 <b>Писать код</b> на HTML, CSS, JS, Python<br>
-                    🎨 <b>Генерировать картинки</b> по описанию<br>
-                    🧠 <b>Отвечать на любые вопросы</b><br>
-                    🎮 <b>Играть</b> в "Угадай число"<br><br>
+                    👥 <b>Новая система друзей!</b><br>
+                    🔑 Твой код дружбы слева — поделись им с друзьями<br>
+                    📨 Отправь заявку в друзья по коду<br>
+                    ✅ Прими или отклони заявку<br>
+                    🔒 Заблокируй пользователя<br>
+                    🗑️ Удали из друзей<br><br>
                     <b>Просто спроси меня о чём угодно!</b> 😊
                     <span class="bot-signature">✦ KIKOHELVINOW v1.1 ✦</span>
                     <span class="time">Только что</span>
@@ -1377,7 +1478,7 @@
 
     <script>
         // ========================================
-        //  👥 KIKOHELVINOW v1.1 — СИСТЕМА ДРУЗЕЙ
+        //  👥 KIKOHELVINOW v1.1 — ЗАЯВКИ И УПРАВЛЕНИЕ
         // ========================================
 
         const APP_VERSION = '1.1';
@@ -1388,13 +1489,12 @@
         const USERS_KEY = 'kikohelvinow_users';
         const SESSION_KEY = 'kikohelvinow_session';
         const SETTINGS_KEY = 'kikohelvinow_settings';
-        const FRIENDS_KEY = 'kikohelvinow_friends';
 
         let currentUser = null;
         let playerData = null;
         let isProcessing = false;
         let messageTimeout = null;
-        let currentChatWith = null; // null = бот, 'friend_name' = друг
+        let currentChatWith = null;
 
         // ---- ЗВУКИ ----
         let soundEnabled = true;
@@ -1473,7 +1573,7 @@
             localStorage.removeItem(SESSION_KEY);
         }
 
-        // ---- СИСТЕМА ДРУЗЕЙ ----
+        // ---- СИСТЕМА ДРУЗЕЙ (РАСШИРЕННАЯ) ----
         function generateFriendCode() {
             const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
             let code = '';
@@ -1488,12 +1588,13 @@
             if (users[username] && users[username].friendCode) {
                 return users[username].friendCode;
             }
-            // Генерируем новый код
             const code = generateFriendCode();
             if (users[username]) {
                 users[username].friendCode = code;
                 if (!users[username].friends) users[username].friends = [];
                 if (!users[username].friendChats) users[username].friendChats = {};
+                if (!users[username].friendRequests) users[username].friendRequests = [];
+                if (!users[username].blocked) users[username].blocked = [];
                 saveUsers(users);
             }
             return code;
@@ -1507,6 +1608,22 @@
             return [];
         }
 
+        function getBlocked(username) {
+            const users = getUsers();
+            if (users[username] && users[username].blocked) {
+                return users[username].blocked;
+            }
+            return [];
+        }
+
+        function getFriendRequests(username) {
+            const users = getUsers();
+            if (users[username] && users[username].friendRequests) {
+                return users[username].friendRequests;
+            }
+            return [];
+        }
+
         function getFriendChats(username) {
             const users = getUsers();
             if (users[username] && users[username].friendChats) {
@@ -1515,11 +1632,18 @@
             return {};
         }
 
-        function addFriendByCode(code) {
-            if (!currentUser) return '❌ Ты не авторизован!';
+        // ---- ОТПРАВКА ЗАЯВКИ ----
+        function sendFriendRequest() {
+            if (!currentUser) return addMessage('❌ Ты не авторизован!', 'bot');
+
+            const input = document.getElementById('friendCodeInput');
+            const code = input.value.trim().toUpperCase();
+            if (code.length !== 6) {
+                addMessage('❌ Код должен состоять из 6 символов!', 'bot');
+                return;
+            }
 
             const users = getUsers();
-            // Ищем пользователя по коду
             let foundUser = null;
             let foundUsername = null;
             for (let [name, data] of Object.entries(users)) {
@@ -1531,41 +1655,206 @@
             }
 
             if (!foundUser) {
-                return '❌ Пользователь с таким кодом не найден!';
+                addMessage('❌ Пользователь с таким кодом не найден!', 'bot');
+                return;
             }
 
-            // Проверяем, не добавлен ли уже
+            // Проверяем, не заблокирован ли
+            if (users[foundUsername].blocked && users[foundUsername].blocked.includes(currentUser)) {
+                addMessage(`❌ ${foundUsername} заблокировал тебя!`, 'bot');
+                return;
+            }
+
+            if (users[currentUser].blocked && users[currentUser].blocked.includes(foundUsername)) {
+                addMessage(`❌ Ты заблокировал ${foundUsername}!`, 'bot');
+                return;
+            }
+
+            // Проверяем, уже ли друзья
             if (users[currentUser].friends.includes(foundUsername)) {
-                return `❌ ${foundUsername} уже в твоих друзьях!`;
+                addMessage(`✅ ${foundUsername} уже в твоих друзьях!`, 'bot');
+                return;
             }
 
-            // Добавляем друга
-            users[currentUser].friends.push(foundUsername);
-            users[currentUser].friendChats[foundUsername] = [];
+            // Проверяем, есть ли уже заявка
+            if (users[foundUsername].friendRequests && users[foundUsername].friendRequests.includes(currentUser)) {
+                addMessage(`⏳ Заявка уже отправлена! Жди ответа от ${foundUsername}`, 'bot');
+                return;
+            }
 
-            // Добавляем в друзья к другому пользователю (взаимно)
-            if (!users[foundUsername].friends.includes(currentUser)) {
-                users[foundUsername].friends.push(currentUser);
+            // Отправляем заявку
+            if (!users[foundUsername].friendRequests) users[foundUsername].friendRequests = [];
+            users[foundUsername].friendRequests.push(currentUser);
+            saveUsers(users);
+
+            addMessage(`📨 Заявка отправлена ${foundUsername}!`, 'bot');
+
+            // Если пользователь в онлайне (мы не можем проверить, но можем показать уведомление)
+            // В локальной версии просто уведомляем
+            input.value = '';
+
+            // Обновляем список друзей
+            renderFriends();
+        }
+
+        // ---- ПРИНЯТЬ ЗАЯВКУ ----
+        function acceptFriendRequest(fromUser) {
+            if (!currentUser) return;
+            const users = getUsers();
+
+            // Проверяем, существует ли заявка
+            if (!users[currentUser].friendRequests || !users[currentUser].friendRequests.includes(fromUser)) {
+                addMessage('❌ Заявка не найдена!', 'bot');
+                return;
             }
-            if (!users[foundUsername].friendChats) {
-                users[foundUsername].friendChats = {};
+
+            // Удаляем заявку
+            users[currentUser].friendRequests = users[currentUser].friendRequests.filter(u => u !== fromUser);
+
+            // Добавляем в друзья
+            if (!users[currentUser].friends.includes(fromUser)) {
+                users[currentUser].friends.push(fromUser);
             }
-            if (!users[foundUsername].friendChats[currentUser]) {
-                users[foundUsername].friendChats[currentUser] = [];
+            if (!users[fromUser].friends.includes(currentUser)) {
+                users[fromUser].friends.push(currentUser);
+            }
+
+            // Создаём чат
+            if (!users[currentUser].friendChats) users[currentUser].friendChats = {};
+            if (!users[currentUser].friendChats[fromUser]) users[currentUser].friendChats[fromUser] = [];
+            if (!users[fromUser].friendChats) users[fromUser].friendChats = {};
+            if (!users[fromUser].friendChats[currentUser]) users[fromUser].friendChats[currentUser] = [];
+
+            saveUsers(users);
+
+            addMessage(`✅ ${fromUser} теперь твой друг! 🎉`, 'bot');
+            renderFriends();
+
+            // Если мы в чате с этим пользователем, обновляем
+            if (currentChatWith === fromUser) {
+                switchChatWith(fromUser);
+            }
+        }
+
+        // ---- ОТКЛОНИТЬ ЗАЯВКУ ----
+        function declineFriendRequest(fromUser) {
+            if (!currentUser) return;
+            const users = getUsers();
+
+            if (!users[currentUser].friendRequests || !users[currentUser].friendRequests.includes(fromUser)) {
+                addMessage('❌ Заявка не найдена!', 'bot');
+                return;
+            }
+
+            users[currentUser].friendRequests = users[currentUser].friendRequests.filter(u => u !== fromUser);
+            saveUsers(users);
+
+            addMessage(`❌ Заявка от ${fromUser} отклонена`, 'bot');
+            renderFriends();
+        }
+
+        // ---- ЗАБЛОКИРОВАТЬ ПОЛЬЗОВАТЕЛЯ ----
+        function blockUser(username) {
+            if (!currentUser) return;
+            const users = getUsers();
+
+            if (!users[currentUser].blocked) users[currentUser].blocked = [];
+
+            if (users[currentUser].blocked.includes(username)) {
+                addMessage(`🔒 ${username} уже заблокирован!`, 'bot');
+                return;
+            }
+
+            users[currentUser].blocked.push(username);
+
+            // Удаляем из друзей, если был
+            if (users[currentUser].friends.includes(username)) {
+                users[currentUser].friends = users[currentUser].friends.filter(u => u !== username);
+                // Удаляем из друзей у другого пользователя
+                if (users[username] && users[username].friends.includes(currentUser)) {
+                    users[username].friends = users[username].friends.filter(u => u !== currentUser);
+                }
+            }
+
+            // Удаляем заявки от этого пользователя
+            if (users[currentUser].friendRequests && users[currentUser].friendRequests.includes(username)) {
+                users[currentUser].friendRequests = users[currentUser].friendRequests.filter(u => u !== username);
             }
 
             saveUsers(users);
 
-            // Обновляем интерфейс
-            renderFriends();
-            switchChatWith(null); // Возвращаемся к боту
+            addMessage(`🔒 ${username} заблокирован!`, 'bot');
 
-            return `✅ ${foundUsername} добавлен в друзья! 🎉\nТеперь вы можете общаться в личном чате.`;
+            // Если мы в чате с этим пользователем — возвращаемся к боту
+            if (currentChatWith === username) {
+                switchChatWith(null);
+            }
+
+            renderFriends();
         }
 
+        // ---- РАЗБЛОКИРОВАТЬ ПОЛЬЗОВАТЕЛЯ ----
+        function unblockUser(username) {
+            if (!currentUser) return;
+            const users = getUsers();
+
+            if (!users[currentUser].blocked || !users[currentUser].blocked.includes(username)) {
+                addMessage(`❌ ${username} не заблокирован!`, 'bot');
+                return;
+            }
+
+            users[currentUser].blocked = users[currentUser].blocked.filter(u => u !== username);
+            saveUsers(users);
+
+            addMessage(`🔓 ${username} разблокирован!`, 'bot');
+            renderFriends();
+        }
+
+        // ---- УДАЛИТЬ ИЗ ДРУЗЕЙ ----
+        function deleteFriend(username) {
+            if (!currentUser) return;
+            const users = getUsers();
+
+            if (!users[currentUser].friends.includes(username)) {
+                addMessage(`❌ ${username} не в твоих друзьях!`, 'bot');
+                return;
+            }
+
+            // Удаляем у текущего пользователя
+            users[currentUser].friends = users[currentUser].friends.filter(u => u !== username);
+
+            // Удаляем у другого пользователя
+            if (users[username] && users[username].friends.includes(currentUser)) {
+                users[username].friends = users[username].friends.filter(u => u !== currentUser);
+            }
+
+            // Очищаем чат (не удаляем, чтобы можно было восстановить)
+            saveUsers(users);
+
+            addMessage(`🗑️ ${username} удалён из друзей!`, 'bot');
+
+            if (currentChatWith === username) {
+                switchChatWith(null);
+            }
+
+            renderFriends();
+        }
+
+        // ---- ЛИЧНЫЙ ЧАТ ----
         function sendMessageToFriend(friendName, text) {
             if (!currentUser) return;
             const users = getUsers();
+
+            // Проверяем, не заблокирован ли
+            if (users[currentUser].blocked && users[currentUser].blocked.includes(friendName)) {
+                addMessage('🔒 Ты заблокировал этого пользователя!', 'bot');
+                return;
+            }
+            if (users[friendName] && users[friendName].blocked && users[friendName].blocked.includes(currentUser)) {
+                addMessage('🔒 Этот пользователь заблокировал тебя!', 'bot');
+                return;
+            }
+
             if (!users[currentUser].friendChats[friendName]) {
                 users[currentUser].friendChats[friendName] = [];
             }
@@ -1576,7 +1865,6 @@
             };
             users[currentUser].friendChats[friendName].push(msg);
 
-            // Сохраняем сообщение у друга (если он есть в базе)
             if (users[friendName] && users[friendName].friendChats && users[friendName].friendChats[currentUser]) {
                 users[friendName].friendChats[currentUser].push(msg);
             }
@@ -1604,7 +1892,6 @@
                 document.getElementById('chatSubtitle').textContent = '🧠 Супер-интеллект';
                 loadBotChat();
             }
-            // Обновляем активный элемент в списке друзей
             document.querySelectorAll('.friend-item').forEach(el => {
                 el.classList.toggle('active', el.dataset.friend === friendName);
             });
@@ -1633,17 +1920,17 @@
         }
 
         function loadBotChat() {
-            // Восстанавливаем диалог с ботом (хранится отдельно)
             const container = document.getElementById('messages');
-            // Если пусто — показываем приветствие
             if (container.children.length === 0) {
                 container.innerHTML = `
                     <div class="message bot">
                         🧠 <b>Привет! Я KIKOHELVINOW v1.1.</b><br><br>
-                        👥 <b>Новая фича — ДРУЗЬЯ!</b><br>
-                        • Слева твой <b>код дружбы</b> — поделись им с друзьями<br>
-                        • Введи код друга в поле <b>"Код друга"</b> и нажми ➕<br>
-                        • Общайся с друзьями в личных чатах!<br><br>
+                        👥 <b>Новая система друзей!</b><br>
+                        🔑 Твой код дружбы слева — поделись им с друзьями<br>
+                        📨 Отправь заявку в друзья по коду<br>
+                        ✅ Прими или отклони заявку<br>
+                        🔒 Заблокируй пользователя<br>
+                        🗑️ Удали из друзей<br><br>
                         <b>Просто спроси меня о чём угодно!</b> 😊
                         <span class="bot-signature">✦ KIKOHELVINOW v1.1 ✦</span>
                         <span class="time">Только что</span>
@@ -1655,10 +1942,12 @@
         function renderFriends() {
             const list = document.getElementById('friendList');
             const friends = getFriends(currentUser);
+            const blocked = getBlocked(currentUser);
+            const requests = getFriendRequests(currentUser);
             const code = getFriendCode(currentUser);
             document.getElementById('friendCodeDisplay').textContent = '📋 ' + code;
 
-            if (friends.length === 0) {
+            if (friends.length === 0 && blocked.length === 0 && requests.length === 0) {
                 list.innerHTML = `
                     <div style="color:rgba(255,255,255,0.2);text-align:center;padding:20px 10px;font-size:12px;">
                         У тебя пока нет друзей 😔<br>
@@ -1668,17 +1957,62 @@
                 return;
             }
 
-            list.innerHTML = '';
-            friends.forEach(friend => {
-                const div = document.createElement('div');
-                div.className = 'friend-item' + (currentChatWith === friend ? ' active' : '');
-                div.dataset.friend = friend;
-                div.innerHTML = `
-                    <span class="friend-name" onclick="switchChatWith('${friend}')">${friend}</span>
-                    <span class="friend-status online">●</span>
-                `;
-                list.appendChild(div);
-            });
+            let html = '';
+
+            // Заявки
+            if (requests.length > 0) {
+                html += `<div style="color:rgba(255,215,0,0.3);font-size:10px;padding:4px 12px;font-weight:600;">📨 ЗАЯВКИ</div>`;
+                requests.forEach(req => {
+                    html += `
+                        <div class="friend-item" data-friend="${req}">
+                            <span class="friend-name">${req}</span>
+                            <span class="friend-request-actions">
+                                <button class="accept-btn" onclick="acceptFriendRequest('${req}')">✅</button>
+                                <button class="decline-btn" onclick="declineFriendRequest('${req}')">❌</button>
+                            </span>
+                        </div>
+                    `;
+                });
+            }
+
+            // Друзья
+            if (friends.length > 0) {
+                html += `<div style="color:rgba(255,255,255,0.3);font-size:10px;padding:4px 12px;font-weight:600;margin-top:4px;">👥 ДРУЗЬЯ</div>`;
+                friends.forEach(friend => {
+                    const isBlocked = blocked.includes(friend);
+                    html += `
+                        <div class="friend-item ${isBlocked ? 'blocked' : ''}" data-friend="${friend}">
+                            <span class="friend-name" onclick="${isBlocked ? '' : `switchChatWith('${friend}')`}">${friend} ${isBlocked ? '🔒' : ''}</span>
+                            <span class="friend-status online">●</span>
+                            <span class="friend-actions">
+                                ${isBlocked ? 
+                                    `<button class="block-btn" onclick="unblockUser('${friend}')" title="Разблокировать">🔓</button>` :
+                                    `<button class="block-btn" onclick="blockUser('${friend}')" title="Заблокировать">🔒</button>`
+                                }
+                                <button class="delete-btn" onclick="deleteFriend('${friend}')" title="Удалить из друзей">🗑️</button>
+                            </span>
+                        </div>
+                    `;
+                });
+            }
+
+            // Заблокированные (отдельно)
+            const blockedOnly = blocked.filter(b => !friends.includes(b));
+            if (blockedOnly.length > 0) {
+                html += `<div style="color:rgba(255,0,0,0.3);font-size:10px;padding:4px 12px;font-weight:600;margin-top:4px;">🔒 ЗАБЛОКИРОВАНЫ</div>`;
+                blockedOnly.forEach(b => {
+                    html += `
+                        <div class="friend-item blocked" data-friend="${b}">
+                            <span class="friend-name">${b}</span>
+                            <span class="friend-actions">
+                                <button class="block-btn" onclick="unblockUser('${b}')" title="Разблокировать">🔓</button>
+                            </span>
+                        </div>
+                    `;
+                });
+            }
+
+            list.innerHTML = html;
         }
 
         function copyFriendCode() {
@@ -1686,7 +2020,6 @@
             navigator.clipboard.writeText(code).then(() => {
                 addMessage(`📋 Код дружбы скопирован: <b>${code}</b>\nПоделись им с друзьями!`, 'bot');
             }).catch(() => {
-                // Если clipboard не работает
                 const input = document.createElement('input');
                 input.value = code;
                 document.body.appendChild(input);
@@ -1695,18 +2028,6 @@
                 document.body.removeChild(input);
                 addMessage(`📋 Код дружбы скопирован: <b>${code}</b>`, 'bot');
             });
-        }
-
-        function addFriend() {
-            const input = document.getElementById('friendCodeInput');
-            const code = input.value.trim().toUpperCase();
-            if (code.length !== 6) {
-                addMessage('❌ Код должен состоять из 6 символов!', 'bot');
-                return;
-            }
-            const result = addFriendByCode(code);
-            addMessage(result, 'bot');
-            input.value = '';
         }
 
         // ---- ПОЛЬЗОВАТЕЛИ (продолжение) ----
@@ -1728,6 +2049,8 @@
                 friendCode: generateFriendCode(),
                 friends: [],
                 friendChats: {},
+                friendRequests: [],
+                blocked: [],
                 memory: {
                     interests: [],
                     mood: 'neutral',
@@ -1797,7 +2120,6 @@
             const settings = loadSettings();
             applyTheme(settings.theme || 'default');
 
-            // Инициализируем друзей
             renderFriends();
             switchChatWith(null);
 
@@ -2190,7 +2512,7 @@ function processData(data) {
                 'Настоящий успех — это когда ты просыпаешься с улыбкой и знаешь, что твой день будет наполнен смыслом. ✨'
             ],
             'помощь': [
-                'Я могу многое! 🧠\n• 💻 Писать код\n• 🎨 Генерировать картинки\n• 🧠 Отвечать на любые вопросы\n• 🎮 Играть в игру ("игра")\n• 📊 Показывать статистику\n• 👥 Добавлять друзей (код дружбы)\n\nПросто спроси меня! 😊'
+                'Я могу многое! 🧠\n• 💻 Писать код\n• 🎨 Генерировать картинки\n• 🧠 Отвечать на любые вопросы\n• 🎮 Играть в игру ("игра")\n• 📊 Показывать статистику\n• 👥 Друзья: заявки, блокировка, удаление\n\nПросто спроси меня! 😊'
             ]
         };
 
@@ -2507,7 +2829,6 @@ function processData(data) {
         function getBotResponse(text) {
             const clean = text.toLowerCase().trim();
 
-            // ИГРА
             if (clean === 'игра' || clean === 'играть' || clean === 'угадайка') {
                 startGuessGame();
                 return null;
@@ -2521,7 +2842,6 @@ function processData(data) {
                 }
             }
 
-            // ГЕНЕРАЦИЯ КАРТИНОК
             if (clean.startsWith('нарисуй') || clean.startsWith('сгенерируй')) {
                 const prompt = text.substring(clean.startsWith('нарисуй') ? 7 : 11).trim();
                 if (prompt.length < 2) return '❌ Напиши что нарисовать!';
@@ -2529,7 +2849,6 @@ function processData(data) {
                 return null;
             }
 
-            // СТАТИСТИКА
             if (clean === 'статистика' || clean === 'стата') {
                 const subNames = { free: '🆓 Обычный', pro: '💎 PRO', plus: '👑 PLUS' };
                 const achievementsList = playerData.achievements || [];
@@ -2542,7 +2861,11 @@ function processData(data) {
                 const interestText = interests.length > 0 ? interests.join(', ') : '❌ Неизвестно';
 
                 const friends = getFriends(currentUser);
+                const blocked = getBlocked(currentUser);
+                const requests = getFriendRequests(currentUser);
                 const friendText = friends.length > 0 ? friends.join(', ') : '❌ Нет друзей';
+                const blockedText = blocked.length > 0 ? blocked.join(', ') : '❌ Нет';
+                const requestText = requests.length > 0 ? requests.join(', ') : '❌ Нет';
 
                 return `📊 <b>ТВОЯ СТАТИСТИКА</b>
                 👤 Игрок: ${currentUser}
@@ -2555,10 +2878,11 @@ function processData(data) {
                 🏅 Достижения: ${achText}
                 💡 Интересы: ${interestText}
                 👥 Друзья: ${friendText}
+                🔒 Заблокированы: ${blockedText}
+                📨 Заявки: ${requestText}
                 🔑 Код дружбы: ${getFriendCode(currentUser)}`;
             }
 
-            // ПОДПИСКИ
             if (clean === 'подписки' || clean === 'подписка') {
                 const subText = Object.entries(SUBSCRIPTIONS).map(([key, sub]) => {
                     const isActive = playerData.subscription === key;
@@ -2569,12 +2893,10 @@ function processData(data) {
                 return `💎 ДОСТУПНЫЕ ПОДПИСКИ 💎\n\n${subText}\n\nНапиши "купить PRO" или "купить PLUS" чтобы оформить!`;
             }
 
-            // ПОКУПКА ПОДПИСОК
             if (clean.includes('купить pro')) { buySubscription('pro'); return null; }
             if (clean.includes('купить plus')) { buySubscription('plus'); return null; }
             if (clean.includes('сбросить подписку') || clean.includes('купить free')) { buySubscription('free'); return null; }
 
-            // СУПЕР-ОТВЕТ
             return getDeepResponse(text, playerData.subscription);
         }
 
@@ -2620,12 +2942,10 @@ function processData(data) {
                 return;
             }
 
-            // Если мы в чате с другом
             if (currentChatWith) {
                 sendMessageToFriend(currentChatWith, text);
                 userInput.value = '';
                 userInput.style.height = 'auto';
-                // Показываем сообщение пользователя в чате
                 const div = document.createElement('div');
                 div.className = 'message user';
                 const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -2639,7 +2959,6 @@ function processData(data) {
                 return;
             }
 
-            // Общаемся с ботом
             isProcessing = true;
 
             if (messageTimeout) {
@@ -2756,10 +3075,9 @@ function processData(data) {
 
         sendBtn.addEventListener('click', sendMessage);
 
-        // Enter на поле ввода кода друга
         document.getElementById('friendCodeInput').addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
-                addFriend();
+                sendFriendRequest();
             }
         });
 
@@ -2784,8 +3102,8 @@ function processData(data) {
             applyTheme(settings.theme);
         }
 
-        console.log(`👥 ${BOT_NAME} v${APP_VERSION} — Система друзей загружена!`);
-        console.log('💡 Поделись своим кодом дружбы с друзьями!');
+        console.log(`👥 ${BOT_NAME} v${APP_VERSION} — Заявки и управление друзьями загружены!`);
+        console.log('📨 Отправляй заявки, принимай, блокируй и удаляй друзей!');
     </script>
 
 </body>
