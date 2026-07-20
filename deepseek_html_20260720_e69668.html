@@ -1,0 +1,2792 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👥 KIKOHELVINOW v1.1 — Друзья</title>
+    <style>
+        /* ===== ГЛОБАЛЬНЫЕ СТИЛИ ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #0a0a0f;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: background 0.5s ease;
+        }
+
+        /* ===== ТЕМЫ ===== */
+        body.theme-default {
+            background: #0a0a0f;
+        }
+        body.theme-ocean {
+            background: #0a1628;
+        }
+        body.theme-sunset {
+            background: #1a0e08;
+        }
+        body.theme-forest {
+            background: #0a1a0f;
+        }
+        body.theme-night {
+            background: #050505;
+        }
+        body.theme-rainbow {
+            background: linear-gradient(135deg, #1a0a0a, #1a1a0a, #0a1a0a, #0a0a1a, #1a0a1a);
+            background-size: 400% 400%;
+            animation: rainbow 15s ease infinite;
+        }
+        body.theme-sakura {
+            background: #1a0a12;
+        }
+        body.theme-christmas {
+            background: #0a1a0a;
+        }
+        body.theme-milkyway {
+            background: #08081a;
+        }
+        body.theme-mountains {
+            background: #0a0f14;
+        }
+        body.theme-tropics {
+            background: #0a1a0a;
+        }
+
+        @keyframes rainbow {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* ===== АВТОРИЗАЦИЯ ===== */
+        .auth-container {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
+            padding: 50px 40px;
+            max-width: 420px;
+            width: 100%;
+            display: none;
+        }
+        .auth-container.active {
+            display: block;
+        }
+        .auth-container .logo {
+            text-align: center;
+            font-size: 56px;
+            margin-bottom: 8px;
+        }
+        .auth-container h1 {
+            color: white;
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+        .auth-container .subtitle {
+            color: rgba(255, 255, 255, 0.3);
+            text-align: center;
+            font-size: 13px;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        .auth-container input {
+            width: 100%;
+            padding: 14px 18px;
+            margin-bottom: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            color: white;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .auth-container input:focus {
+            border-color: #764ba2;
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .auth-container input::placeholder {
+            color: rgba(255, 255, 255, 0.25);
+        }
+        .auth-container .btn-auth {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 5px;
+        }
+        .auth-container .btn-auth:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 30px rgba(118, 75, 162, 0.3);
+        }
+        .auth-container .btn-auth.secondary {
+            background: rgba(255, 255, 255, 0.06);
+            margin-top: 8px;
+        }
+        .auth-container .btn-auth.secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+        .auth-container .auth-error {
+            color: #ff6b6b;
+            font-size: 13px;
+            text-align: center;
+            margin-top: 10px;
+            min-height: 20px;
+        }
+        .auth-container .auth-success {
+            color: #4ade80;
+            font-size: 13px;
+            text-align: center;
+            margin-top: 10px;
+            min-height: 20px;
+        }
+        .auth-container .auth-switch {
+            color: rgba(255, 255, 255, 0.3);
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        .auth-container .auth-switch span {
+            color: #667eea;
+            cursor: pointer;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .auth-container .auth-switch span:hover {
+            color: #764ba2;
+        }
+
+        /* ===== ОСНОВНОЙ ЧАТ ===== */
+        .chat-container {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
+            width: 100%;
+            max-width: 900px;
+            height: 750px;
+            display: none;
+            flex-direction: row;
+            overflow: hidden;
+        }
+        .chat-container.active {
+            display: flex;
+        }
+
+        /* ===== БОКОВАЯ ПАНЕЛЬ (ДРУЗЬЯ) ===== */
+        .sidebar {
+            width: 220px;
+            min-width: 180px;
+            background: rgba(0, 0, 0, 0.3);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+        .sidebar-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .sidebar-header .title {
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            opacity: 0.6;
+        }
+        .sidebar-header .friend-code {
+            background: rgba(118, 75, 162, 0.2);
+            border: 1px solid rgba(118, 75, 162, 0.3);
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            color: #764ba2;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .sidebar-header .friend-code:hover {
+            background: rgba(118, 75, 162, 0.4);
+        }
+
+        .friend-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px 0;
+        }
+        .friend-list::-webkit-scrollbar {
+            width: 3px;
+        }
+        .friend-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .friend-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .friend-item {
+            padding: 10px 16px;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: all 0.3s;
+            border-left: 3px solid transparent;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+        }
+        .friend-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+        }
+        .friend-item.active {
+            background: rgba(118, 75, 162, 0.15);
+            border-left-color: #764ba2;
+            color: white;
+        }
+        .friend-item .friend-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100px;
+        }
+        .friend-item .friend-status {
+            font-size: 10px;
+            opacity: 0.4;
+        }
+        .friend-item .friend-status.online {
+            color: #4ade80;
+            opacity: 0.8;
+        }
+
+        .add-friend-section {
+            padding: 10px 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+        .add-friend-section input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+            padding: 8px 10px;
+            color: white;
+            font-size: 12px;
+            outline: none;
+            transition: border-color 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .add-friend-section input:focus {
+            border-color: #764ba2;
+        }
+        .add-friend-section input::placeholder {
+            color: rgba(255, 255, 255, 0.2);
+            text-transform: none;
+            letter-spacing: 0;
+        }
+        .add-friend-section button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .add-friend-section button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(118, 75, 162, 0.3);
+        }
+
+        /* ===== ОСНОВНАЯ ОБЛАСТЬ ЧАТА ===== */
+        .main-chat {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-width: 0;
+        }
+
+        .chat-header {
+            padding: 12px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+        .avatar {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+            box-shadow: 0 0 20px rgba(118, 75, 162, 0.15);
+        }
+        .header-info {
+            min-width: 0;
+        }
+        .header-info .chat-title {
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .header-info .chat-subtitle {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 10px;
+            display: block;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: white;
+            font-size: 12px;
+            flex-wrap: wrap;
+        }
+        .coins-display {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.12);
+            padding: 3px 12px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 600;
+            font-size: 12px;
+            color: #ffd700;
+        }
+        .subscription-badge {
+            background: rgba(255, 215, 0, 0.06);
+            border: 1px solid rgba(255, 215, 0, 0.08);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            color: rgba(255, 215, 0, 0.5);
+            white-space: nowrap;
+        }
+        .btn-header {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.5);
+            padding: 4px 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        .btn-header:hover {
+            background: rgba(118, 75, 162, 0.15);
+            border-color: #764ba2;
+            color: white;
+        }
+        .btn-logout {
+            background: rgba(255, 0, 0, 0.06);
+            border-color: rgba(255, 0, 0, 0.08);
+            color: rgba(255, 0, 0, 0.4);
+        }
+        .btn-logout:hover {
+            background: rgba(255, 0, 0, 0.12) !important;
+            border-color: rgba(255, 0, 0, 0.2) !important;
+            color: #ff6b6b !important;
+        }
+        .btn-settings {
+            font-size: 16px;
+            padding: 2px 8px;
+        }
+        .btn-settings:hover {
+            transform: rotate(60deg);
+        }
+
+        /* ===== СООБЩЕНИЯ ===== */
+        .chat-messages {
+            flex: 1;
+            padding: 16px 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.15);
+        }
+        .chat-messages::-webkit-scrollbar {
+            width: 4px;
+        }
+        .chat-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 10px 16px;
+            border-radius: 14px;
+            animation: fadeIn 0.3s ease;
+            line-height: 1.5;
+            font-size: 13px;
+            word-wrap: break-word;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px) scale(0.97);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .message.bot {
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.85);
+            border-bottom-left-radius: 4px;
+        }
+        .message.bot .bot-signature {
+            font-size: 9px;
+            color: rgba(118, 75, 162, 0.4);
+            font-weight: 600;
+            margin-top: 4px;
+            display: block;
+            letter-spacing: 0.5px;
+        }
+        .message.bot .thinking {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.2);
+            font-style: italic;
+            margin-bottom: 4px;
+            padding: 3px 10px;
+            background: rgba(118, 75, 162, 0.06);
+            border-radius: 6px;
+            border-left: 2px solid #764ba2;
+            display: inline-block;
+        }
+        .message.bot .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin: 6px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #4ade80;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .message.bot .code-block .code-label {
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.15);
+            margin-bottom: 4px;
+            font-family: 'Segoe UI', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .message.user {
+            align-self: flex-end;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 4px 15px rgba(118, 75, 162, 0.1);
+        }
+        .message.friend {
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.85);
+            border-bottom-left-radius: 4px;
+        }
+        .message.friend .friend-name-msg {
+            font-size: 10px;
+            color: #4ade80;
+            font-weight: 600;
+            margin-bottom: 2px;
+            display: block;
+        }
+        .message .time {
+            font-size: 8px;
+            opacity: 0.2;
+            margin-top: 3px;
+            display: block;
+        }
+        .message.user .time {
+            text-align: right;
+        }
+
+        .typing-indicator {
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 8px 14px;
+            border-radius: 14px;
+            border-bottom-left-radius: 4px;
+            display: none;
+        }
+        .typing-indicator span {
+            display: inline-block;
+            width: 5px;
+            height: 5px;
+            background: #764ba2;
+            border-radius: 50%;
+            margin: 0 3px;
+            animation: typing 1.4s infinite;
+        }
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes typing {
+            0%,
+            60%,
+            100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 4px;
+            padding: 6px 16px;
+            flex-wrap: wrap;
+            background: rgba(0, 0, 0, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            flex-shrink: 0;
+        }
+        .quick-actions button {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.3);
+            padding: 3px 12px;
+            border-radius: 16px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .quick-actions button:hover {
+            background: rgba(118, 75, 162, 0.1);
+            border-color: #764ba2;
+            color: white;
+        }
+        .quick-actions button.code-btn {
+            color: #4ade80;
+            border-color: rgba(74, 222, 128, 0.05);
+        }
+        .quick-actions button.code-btn:hover {
+            background: rgba(74, 222, 128, 0.08);
+            border-color: #4ade80;
+        }
+        .quick-actions button.think-btn {
+            color: #ffd700;
+            border-color: rgba(255, 215, 0, 0.05);
+        }
+        .quick-actions button.think-btn:hover {
+            background: rgba(255, 215, 0, 0.08);
+            border-color: #ffd700;
+        }
+        .quick-actions button.game-btn {
+            color: #ff6b6b;
+            border-color: rgba(255, 107, 107, 0.05);
+        }
+        .quick-actions button.game-btn:hover {
+            background: rgba(255, 107, 107, 0.08);
+            border-color: #ff6b6b;
+        }
+
+        .chat-input {
+            padding: 10px 16px 14px;
+            background: rgba(0, 0, 0, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+            flex-shrink: 0;
+        }
+        .chat-input textarea {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 10px;
+            padding: 10px 14px;
+            resize: none;
+            font-size: 13px;
+            outline: none;
+            max-height: 100px;
+            min-height: 38px;
+            line-height: 1.4;
+            color: white;
+            transition: border-color 0.3s;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .chat-input textarea::placeholder {
+            color: rgba(255, 255, 255, 0.15);
+        }
+        .chat-input textarea:focus {
+            border-color: #764ba2;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .chat-input button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(118, 75, 162, 0.1);
+        }
+        .chat-input button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 25px rgba(118, 75, 162, 0.2);
+        }
+
+        .version-footer {
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.08);
+            text-align: center;
+            padding: 4px 0;
+            background: rgba(0, 0, 0, 0.15);
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+        }
+        .version-footer .version-number {
+            color: rgba(255, 255, 255, 0.12);
+        }
+        .version-footer .version-note {
+            color: rgba(255, 215, 0, 0.12);
+            font-size: 8px;
+            font-style: italic;
+        }
+
+        /* ===== МОДАЛЫ ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal {
+            background: #12121f;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 480px;
+            width: 92%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            animation: modalIn 0.3s ease;
+        }
+        .modal-settings {
+            max-width: 450px;
+        }
+        @keyframes modalIn {
+            from {
+                transform: scale(0.95);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        .modal h2 {
+            color: white;
+            text-align: center;
+            margin-bottom: 6px;
+            font-size: 20px;
+        }
+        .modal .modal-subtitle {
+            color: rgba(255, 255, 255, 0.25);
+            text-align: center;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+        .settings-section {
+            margin-bottom: 18px;
+        }
+        .settings-section .section-title {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            padding-bottom: 6px;
+        }
+        .settings-section .setting-item {
+            margin-bottom: 10px;
+        }
+        .settings-section .setting-item label {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 12px;
+            display: block;
+            margin-bottom: 3px;
+        }
+        .settings-section .setting-item input {
+            width: 100%;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+            color: white;
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .settings-section .setting-item input:focus {
+            border-color: #764ba2;
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .settings-section .setting-item input::placeholder {
+            color: rgba(255, 255, 255, 0.15);
+        }
+
+        .theme-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+        }
+        .theme-btn {
+            padding: 8px 4px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            color: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 10px;
+            text-align: center;
+        }
+        .theme-btn:hover {
+            transform: scale(1.05);
+            border-color: #764ba2;
+            color: white;
+        }
+        .theme-btn.active {
+            border-color: #764ba2;
+            background: rgba(118, 75, 162, 0.1);
+            color: white;
+        }
+        .theme-btn .preview {
+            display: block;
+            width: 100%;
+            height: 22px;
+            border-radius: 5px;
+            margin-bottom: 3px;
+        }
+        .theme-btn .preview-default {
+            background: #0a0a0f;
+        }
+        .theme-btn .preview-ocean {
+            background: #0a1628;
+        }
+        .theme-btn .preview-sunset {
+            background: #1a0e08;
+        }
+        .theme-btn .preview-forest {
+            background: #0a1a0f;
+        }
+        .theme-btn .preview-night {
+            background: #050505;
+        }
+        .theme-btn .preview-rainbow {
+            background: linear-gradient(135deg, #1a0a0a, #1a1a0a, #0a1a0a, #0a0a1a, #1a0a1a);
+            background-size: 400% 400%;
+            animation: rainbow 3s ease infinite;
+        }
+        .theme-btn .preview-sakura {
+            background: #1a0a12;
+        }
+        .theme-btn .preview-christmas {
+            background: #0a1a0a;
+        }
+        .theme-btn .preview-milkyway {
+            background: #08081a;
+        }
+        .theme-btn .preview-mountains {
+            background: #0a0f14;
+        }
+        .theme-btn .preview-tropics {
+            background: #0a1a0a;
+        }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 4px 0;
+        }
+        .toggle-container label {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .toggle-switch {
+            position: relative;
+            width: 40px;
+            height: 22px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 11px;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+        .toggle-switch.active {
+            background: #4CAF50;
+        }
+        .toggle-switch .toggle-knob {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 18px;
+            height: 18px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        .toggle-switch.active .toggle-knob {
+            left: 20px;
+        }
+
+        .settings-btn-save {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 5px;
+        }
+        .settings-btn-save:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 20px rgba(118, 75, 162, 0.2);
+        }
+        .settings-error {
+            color: #ff6b6b;
+            font-size: 12px;
+            text-align: center;
+            margin-top: 8px;
+            min-height: 18px;
+        }
+        .settings-success {
+            color: #4ade80;
+            font-size: 12px;
+            text-align: center;
+            margin-top: 8px;
+            min-height: 18px;
+        }
+        .modal-close {
+            display: block;
+            margin: 10px auto 0;
+            padding: 6px 20px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 13px;
+        }
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.06);
+            color: white;
+        }
+
+        .plan-card {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.3s;
+        }
+        .plan-card:hover {
+            border-color: #764ba2;
+        }
+        .plan-card.free {
+            border-color: rgba(255, 255, 255, 0.06);
+        }
+        .plan-card.pro {
+            border-color: #4CAF50;
+        }
+        .plan-card.plus {
+            border-color: #ffd700;
+        }
+        .plan-card .plan-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+        .plan-card .plan-name {
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .plan-card .plan-price {
+            font-size: 15px;
+            font-weight: 600;
+            color: #ffd700;
+        }
+        .plan-card .plan-desc {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 11px;
+            margin-top: 3px;
+        }
+        .plan-card .plan-benefits {
+            margin-top: 6px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3px;
+        }
+        .plan-card .plan-benefits span {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1px 8px;
+            border-radius: 12px;
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.3);
+        }
+        .plan-card .buy-btn {
+            margin-top: 8px;
+            padding: 6px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            width: 100%;
+            font-size: 13px;
+        }
+        .plan-card .buy-btn:hover:not(:disabled) {
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(118, 75, 162, 0.2);
+        }
+        .plan-card .buy-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        .plan-card .current-plan {
+            color: #4ade80;
+            font-weight: 600;
+            font-size: 12px;
+            text-align: center;
+            margin-top: 4px;
+        }
+
+        @media (max-width: 650px) {
+            .sidebar {
+                width: 140px;
+                min-width: 100px;
+            }
+            .friend-item {
+                font-size: 11px;
+                padding: 8px 10px;
+            }
+            .friend-item .friend-name {
+                max-width: 60px;
+            }
+            .add-friend-section input {
+                font-size: 10px;
+                padding: 6px 8px;
+            }
+            .add-friend-section button {
+                font-size: 11px;
+                padding: 6px 10px;
+            }
+            .chat-container {
+                height: 100vh;
+                border-radius: 0;
+                max-width: 100%;
+            }
+            body {
+                padding: 0;
+            }
+            .auth-container {
+                border-radius: 0;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding: 30px 20px;
+            }
+            .auth-container.active {
+                display: flex;
+            }
+            .chat-messages {
+                padding: 12px 14px;
+            }
+            .message {
+                font-size: 12px;
+                padding: 8px 12px;
+            }
+            .chat-input {
+                padding: 8px 12px 12px;
+            }
+            .chat-input textarea {
+                font-size: 12px;
+                padding: 8px 12px;
+                min-height: 34px;
+            }
+            .chat-input button {
+                width: 36px;
+                height: 36px;
+                font-size: 14px;
+            }
+            .quick-actions {
+                padding: 4px 12px;
+                gap: 3px;
+            }
+            .quick-actions button {
+                font-size: 10px;
+                padding: 2px 8px;
+            }
+            .header-info .chat-title {
+                font-size: 12px;
+            }
+            .coins-display {
+                font-size: 10px;
+                padding: 2px 8px;
+            }
+            .subscription-badge {
+                font-size: 9px;
+                padding: 2px 6px;
+            }
+            .btn-header {
+                font-size: 10px;
+                padding: 3px 8px;
+            }
+            .theme-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .modal {
+                padding: 20px;
+            }
+            .version-footer {
+                font-size: 8px;
+                gap: 4px;
+                padding: 3px 0;
+            }
+            .version-footer .version-note {
+                font-size: 7px;
+            }
+            .sidebar-header {
+                padding: 8px 10px;
+            }
+            .sidebar-header .title {
+                font-size: 11px;
+            }
+            .sidebar-header .friend-code {
+                font-size: 9px;
+                padding: 1px 6px;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .sidebar {
+                width: 100px;
+                min-width: 70px;
+            }
+            .friend-item {
+                font-size: 10px;
+                padding: 6px 8px;
+            }
+            .friend-item .friend-name {
+                max-width: 40px;
+            }
+            .friend-item .friend-status {
+                font-size: 8px;
+            }
+            .add-friend-section {
+                flex-direction: column;
+                gap: 4px;
+                padding: 6px 8px;
+            }
+            .add-friend-section input {
+                font-size: 9px;
+                padding: 4px 6px;
+            }
+            .add-friend-section button {
+                font-size: 10px;
+                padding: 4px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== ЭКРАН ВХОДА ===== -->
+    <div class="auth-container active" id="authContainer">
+        <div class="logo">👥</div>
+        <h1>KIKOHELVINOW</h1>
+        <p class="subtitle">✨ v1.1 — Друзья и общение ✨</p>
+        <div id="authForm">
+            <input type="text" id="authUsername" placeholder="👤 Имя пользователя" autocomplete="username">
+            <input type="password" id="authPassword" placeholder="🔑 Пароль" autocomplete="current-password">
+            <button class="btn-auth" id="authLoginBtn">🔓 Войти</button>
+            <button class="btn-auth secondary" id="authRegisterBtn">📝 Создать аккаунт</button>
+            <div class="auth-error" id="authError"></div>
+            <div class="auth-success" id="authSuccess"></div>
+        </div>
+        <div class="auth-switch">
+            Нет аккаунта? <span id="switchToRegister">Зарегистрируйся</span>
+        </div>
+    </div>
+
+    <!-- ===== ЧАТ ===== -->
+    <div class="chat-container" id="chatContainer">
+        <!-- БОКОВАЯ ПАНЕЛЬ (ДРУЗЬЯ) -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <span class="title">👥 Друзья</span>
+                <span class="friend-code" id="friendCodeDisplay" onclick="copyFriendCode()">📋 КОД</span>
+            </div>
+            <div class="friend-list" id="friendList">
+                <div style="color:rgba(255,255,255,0.2);text-align:center;padding:20px 10px;font-size:12px;">
+                    У тебя пока нет друзей 😔<br>
+                    <span style="font-size:10px;opacity:0.6;">Поделись своим кодом дружбы!</span>
+                </div>
+            </div>
+            <div class="add-friend-section">
+                <input type="text" id="friendCodeInput" placeholder="Код друга" maxlength="6" style="text-transform:uppercase;">
+                <button onclick="addFriend()">➕</button>
+            </div>
+        </div>
+
+        <!-- ОСНОВНАЯ ОБЛАСТЬ ЧАТА -->
+        <div class="main-chat">
+            <div class="chat-header">
+                <div class="header-left">
+                    <div class="avatar">🧠</div>
+                    <div class="header-info">
+                        <span class="chat-title" id="chatTitle">KIKOHELVINOW</span>
+                        <span class="chat-subtitle" id="chatSubtitle">🧠 Супер-интеллект</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="coins-display">🪙 <span id="coinsDisplay">100</span></div>
+                    <button class="btn-header" onclick="openSubscriptions()">💎</button>
+                    <button class="btn-header btn-settings" onclick="openSettings()" title="Настройки">⚙️</button>
+                    <button class="btn-header btn-logout" onclick="logout()">🚪</button>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="messages">
+                <div class="message bot">
+                    🧠 <b>Привет! Я KIKOHELVINOW v1.1.</b><br><br>
+                    👥 <b>Новая фича — ДРУЗЬЯ!</b><br>
+                    • Слева твой <b>код дружбы</b> — поделись им с друзьями<br>
+                    • Введи код друга в поле <b>"Код друга"</b> и нажми ➕<br>
+                    • Общайся с друзьями в личных чатах!<br><br>
+                    Я умею:<br>
+                    💻 <b>Писать код</b> на HTML, CSS, JS, Python<br>
+                    🎨 <b>Генерировать картинки</b> по описанию<br>
+                    🧠 <b>Отвечать на любые вопросы</b><br>
+                    🎮 <b>Играть</b> в "Угадай число"<br><br>
+                    <b>Просто спроси меня о чём угодно!</b> 😊
+                    <span class="bot-signature">✦ KIKOHELVINOW v1.1 ✦</span>
+                    <span class="time">Только что</span>
+                </div>
+            </div>
+
+            <div class="typing-indicator" id="typingIndicator">
+                <span></span><span></span><span></span>
+            </div>
+
+            <div class="quick-actions">
+                <button class="code-btn" onclick="sendQuick('напиши код HTML для страницы с кнопкой')">💻 Код</button>
+                <button class="game-btn" onclick="sendQuick('игра')">🎮 Играть</button>
+                <button class="think-btn" onclick="sendQuick('что такое счастье?')">🤔 Мудрость</button>
+                <button onclick="sendQuick('помощь')">❓ Помощь</button>
+                <button onclick="sendQuick('статистика')">📊 Стата</button>
+                <button onclick="sendQuick('нарисуй красивый закат')">🎨 Арт</button>
+            </div>
+
+            <div class="chat-input">
+                <textarea id="userInput" rows="1" placeholder="Спроси меня о чём угодно..." maxlength="2000"></textarea>
+                <button id="sendBtn">➤</button>
+            </div>
+
+            <div class="version-footer">
+                <span class="version-number">v1.1</span>
+                <span class="version-note">Эй слушай, иногда заходи на гитхаб там выходят обновления!</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== МОДАЛ НАСТРОЕК ===== -->
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal modal-settings">
+            <h2>⚙️ Настройки</h2>
+            <p class="modal-subtitle">Настрой внешний вид и безопасность</p>
+
+            <div class="settings-section">
+                <div class="section-title">✏️ Смена имени</div>
+                <div class="setting-item">
+                    <label>Новое имя пользователя</label>
+                    <input type="text" id="newUsername" placeholder="Введите новое имя" maxlength="20">
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <div class="section-title">🎨 Тема фона</div>
+                <div class="theme-grid" id="themeGrid">
+                    <button class="theme-btn active" data-theme="default"><span class="preview preview-default"></span>Космос</button>
+                    <button class="theme-btn" data-theme="ocean"><span class="preview preview-ocean"></span>Океан</button>
+                    <button class="theme-btn" data-theme="sunset"><span class="preview preview-sunset"></span>Закат</button>
+                    <button class="theme-btn" data-theme="forest"><span class="preview preview-forest"></span>Лес</button>
+                    <button class="theme-btn" data-theme="night"><span class="preview preview-night"></span>Ночь</button>
+                    <button class="theme-btn" data-theme="rainbow"><span class="preview preview-rainbow"></span>Радуга</button>
+                    <button class="theme-btn" data-theme="sakura"><span class="preview preview-sakura"></span>🌸 Сакура</button>
+                    <button class="theme-btn" data-theme="christmas"><span class="preview preview-christmas"></span>🎄 Новогодняя</button>
+                    <button class="theme-btn" data-theme="milkyway"><span class="preview preview-milkyway"></span>🌌 Млечный путь</button>
+                    <button class="theme-btn" data-theme="mountains"><span class="preview preview-mountains"></span>🏔️ Горы</button>
+                    <button class="theme-btn" data-theme="tropics"><span class="preview preview-tropics"></span>🌺 Тропики</button>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <div class="section-title">🔊 Звуки</div>
+                <div class="toggle-container">
+                    <span style="color:rgba(255,255,255,0.2);font-size:16px;">🔇</span>
+                    <div class="toggle-switch active" id="soundToggle" onclick="toggleSound()">
+                        <div class="toggle-knob"></div>
+                    </div>
+                    <span style="color:rgba(255,255,255,0.2);font-size:16px;">🔊</span>
+                    <label style="margin-left:4px;color:rgba(255,255,255,0.2);font-size:11px;" id="soundLabel">Включены</label>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <div class="section-title">🔑 Смена пароля</div>
+                <div class="setting-item">
+                    <label>Текущий пароль</label>
+                    <input type="password" id="currentPassword" placeholder="Введите текущий пароль">
+                </div>
+                <div class="setting-item">
+                    <label>Новый пароль</label>
+                    <input type="password" id="newPassword" placeholder="Введите новый пароль">
+                </div>
+                <div class="setting-item">
+                    <label>Подтверждение</label>
+                    <input type="password" id="confirmPassword" placeholder="Подтвердите новый пароль">
+                </div>
+            </div>
+
+            <div id="settingsError" class="settings-error"></div>
+            <div id="settingsSuccess" class="settings-success"></div>
+            <button class="settings-btn-save" onclick="saveSettings()">💾 Сохранить</button>
+            <button class="modal-close" onclick="closeSettings()">Закрыть</button>
+        </div>
+    </div>
+
+    <!-- ===== МОДАЛ ПОДПИСОК ===== -->
+    <div class="modal-overlay" id="subscriptionModal">
+        <div class="modal">
+            <h2>💎 Подписки</h2>
+            <div class="sub-info" id="subInfo">Выбери подписку для улучшения интеллекта</div>
+            <div id="planList"></div>
+            <button class="modal-close" onclick="closeSubscriptions()">Закрыть</button>
+        </div>
+    </div>
+
+    <script>
+        // ========================================
+        //  👥 KIKOHELVINOW v1.1 — СИСТЕМА ДРУЗЕЙ
+        // ========================================
+
+        const APP_VERSION = '1.1';
+        const BOT_NAME = 'KIKOHELVINOW';
+        const BOT_SIGNATURE = '✦ ' + BOT_NAME + ' v' + APP_VERSION + ' ✦';
+
+        // ---- БАЗА ДАННЫХ ----
+        const USERS_KEY = 'kikohelvinow_users';
+        const SESSION_KEY = 'kikohelvinow_session';
+        const SETTINGS_KEY = 'kikohelvinow_settings';
+        const FRIENDS_KEY = 'kikohelvinow_friends';
+
+        let currentUser = null;
+        let playerData = null;
+        let isProcessing = false;
+        let messageTimeout = null;
+        let currentChatWith = null; // null = бот, 'friend_name' = друг
+
+        // ---- ЗВУКИ ----
+        let soundEnabled = true;
+
+        function loadSoundSetting() {
+            try {
+                const data = localStorage.getItem('kikohelvinow_sound');
+                if (data !== null) {
+                    soundEnabled = data === 'true';
+                    updateSoundUI();
+                }
+            } catch (e) {}
+        }
+
+        function saveSoundSetting() {
+            localStorage.setItem('kikohelvinow_sound', String(soundEnabled));
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            saveSoundSetting();
+            updateSoundUI();
+            addMessage(`🔊 Звуки ${soundEnabled ? 'включены' : 'выключены'}!`, 'bot');
+        }
+
+        function updateSoundUI() {
+            const toggle = document.getElementById('soundToggle');
+            const label = document.getElementById('soundLabel');
+            if (soundEnabled) {
+                toggle.classList.add('active');
+                label.textContent = 'Включены';
+            } else {
+                toggle.classList.remove('active');
+                label.textContent = 'Выключены';
+            }
+        }
+
+        function playSound(type) {
+            if (!soundEnabled) return;
+            try {
+                const audio = new Audio();
+                if (type === 'send') {
+                    audio.src =
+                        'data:audio/wav;base64,UklGRlwAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YVoAAACAgICAf39/f3x8fHx6enp6eHh4eHZ2dnZ0dHR0cnJycnBwcHBubm5ubGxsbGpqampoaGhoZmZmZg==';
+                } else {
+                    audio.src =
+                        'data:audio/wav;base64,UklGRlwAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YVoAAACAgICAfn5+fnx8fHx6enp6eHh4eHZ2dnZ0dHR0cnJycnBwcHBubm5ubGxsbGpqampoZmZmZmQ=';
+                }
+                audio.volume = 0.08;
+                audio.play().catch(() => {});
+            } catch (e) {}
+        }
+
+        // ---- ПОЛЬЗОВАТЕЛИ ----
+        function getUsers() {
+            try {
+                return JSON.parse(localStorage.getItem(USERS_KEY)) || {};
+            } catch (e) { return {}; }
+        }
+
+        function saveUsers(users) {
+            localStorage.setItem(USERS_KEY, JSON.stringify(users));
+        }
+
+        function getSession() {
+            try {
+                return JSON.parse(localStorage.getItem(SESSION_KEY));
+            } catch (e) { return null; }
+        }
+
+        function saveSession(username) {
+            localStorage.setItem(SESSION_KEY, JSON.stringify({ username, timestamp: Date.now() }));
+        }
+
+        function clearSession() {
+            localStorage.removeItem(SESSION_KEY);
+        }
+
+        // ---- СИСТЕМА ДРУЗЕЙ ----
+        function generateFriendCode() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = '';
+            for (let i = 0; i < 6; i++) {
+                code += chars[Math.floor(Math.random() * chars.length)];
+            }
+            return code;
+        }
+
+        function getFriendCode(username) {
+            const users = getUsers();
+            if (users[username] && users[username].friendCode) {
+                return users[username].friendCode;
+            }
+            // Генерируем новый код
+            const code = generateFriendCode();
+            if (users[username]) {
+                users[username].friendCode = code;
+                if (!users[username].friends) users[username].friends = [];
+                if (!users[username].friendChats) users[username].friendChats = {};
+                saveUsers(users);
+            }
+            return code;
+        }
+
+        function getFriends(username) {
+            const users = getUsers();
+            if (users[username] && users[username].friends) {
+                return users[username].friends;
+            }
+            return [];
+        }
+
+        function getFriendChats(username) {
+            const users = getUsers();
+            if (users[username] && users[username].friendChats) {
+                return users[username].friendChats;
+            }
+            return {};
+        }
+
+        function addFriendByCode(code) {
+            if (!currentUser) return '❌ Ты не авторизован!';
+
+            const users = getUsers();
+            // Ищем пользователя по коду
+            let foundUser = null;
+            let foundUsername = null;
+            for (let [name, data] of Object.entries(users)) {
+                if (data.friendCode === code && name !== currentUser) {
+                    foundUser = data;
+                    foundUsername = name;
+                    break;
+                }
+            }
+
+            if (!foundUser) {
+                return '❌ Пользователь с таким кодом не найден!';
+            }
+
+            // Проверяем, не добавлен ли уже
+            if (users[currentUser].friends.includes(foundUsername)) {
+                return `❌ ${foundUsername} уже в твоих друзьях!`;
+            }
+
+            // Добавляем друга
+            users[currentUser].friends.push(foundUsername);
+            users[currentUser].friendChats[foundUsername] = [];
+
+            // Добавляем в друзья к другому пользователю (взаимно)
+            if (!users[foundUsername].friends.includes(currentUser)) {
+                users[foundUsername].friends.push(currentUser);
+            }
+            if (!users[foundUsername].friendChats) {
+                users[foundUsername].friendChats = {};
+            }
+            if (!users[foundUsername].friendChats[currentUser]) {
+                users[foundUsername].friendChats[currentUser] = [];
+            }
+
+            saveUsers(users);
+
+            // Обновляем интерфейс
+            renderFriends();
+            switchChatWith(null); // Возвращаемся к боту
+
+            return `✅ ${foundUsername} добавлен в друзья! 🎉\nТеперь вы можете общаться в личном чате.`;
+        }
+
+        function sendMessageToFriend(friendName, text) {
+            if (!currentUser) return;
+            const users = getUsers();
+            if (!users[currentUser].friendChats[friendName]) {
+                users[currentUser].friendChats[friendName] = [];
+            }
+            const msg = {
+                from: currentUser,
+                text: text,
+                time: Date.now()
+            };
+            users[currentUser].friendChats[friendName].push(msg);
+
+            // Сохраняем сообщение у друга (если он есть в базе)
+            if (users[friendName] && users[friendName].friendChats && users[friendName].friendChats[currentUser]) {
+                users[friendName].friendChats[currentUser].push(msg);
+            }
+
+            saveUsers(users);
+            renderFriendChat(friendName);
+        }
+
+        function getFriendMessages(friendName) {
+            const users = getUsers();
+            if (users[currentUser] && users[currentUser].friendChats && users[currentUser].friendChats[friendName]) {
+                return users[currentUser].friendChats[friendName];
+            }
+            return [];
+        }
+
+        function switchChatWith(friendName) {
+            currentChatWith = friendName;
+            if (friendName) {
+                document.getElementById('chatTitle').textContent = friendName;
+                document.getElementById('chatSubtitle').textContent = '👥 Личный чат';
+                renderFriendChat(friendName);
+            } else {
+                document.getElementById('chatTitle').textContent = 'KIKOHELVINOW';
+                document.getElementById('chatSubtitle').textContent = '🧠 Супер-интеллект';
+                loadBotChat();
+            }
+            // Обновляем активный элемент в списке друзей
+            document.querySelectorAll('.friend-item').forEach(el => {
+                el.classList.toggle('active', el.dataset.friend === friendName);
+            });
+        }
+
+        function renderFriendChat(friendName) {
+            const messages = getFriendMessages(friendName);
+            const container = document.getElementById('messages');
+            container.innerHTML = '';
+            messages.forEach(msg => {
+                const div = document.createElement('div');
+                div.className = `message ${msg.from === currentUser ? 'user' : 'friend'}`;
+                const time = new Date(msg.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                let extra = '';
+                if (msg.from !== currentUser) {
+                    extra = `<span class="friend-name-msg">${msg.from}</span>`;
+                }
+                div.innerHTML = `
+                    ${extra}
+                    ${msg.text}
+                    <span class="time">${time}</span>
+                `;
+                container.appendChild(div);
+            });
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function loadBotChat() {
+            // Восстанавливаем диалог с ботом (хранится отдельно)
+            const container = document.getElementById('messages');
+            // Если пусто — показываем приветствие
+            if (container.children.length === 0) {
+                container.innerHTML = `
+                    <div class="message bot">
+                        🧠 <b>Привет! Я KIKOHELVINOW v1.1.</b><br><br>
+                        👥 <b>Новая фича — ДРУЗЬЯ!</b><br>
+                        • Слева твой <b>код дружбы</b> — поделись им с друзьями<br>
+                        • Введи код друга в поле <b>"Код друга"</b> и нажми ➕<br>
+                        • Общайся с друзьями в личных чатах!<br><br>
+                        <b>Просто спроси меня о чём угодно!</b> 😊
+                        <span class="bot-signature">✦ KIKOHELVINOW v1.1 ✦</span>
+                        <span class="time">Только что</span>
+                    </div>
+                `;
+            }
+        }
+
+        function renderFriends() {
+            const list = document.getElementById('friendList');
+            const friends = getFriends(currentUser);
+            const code = getFriendCode(currentUser);
+            document.getElementById('friendCodeDisplay').textContent = '📋 ' + code;
+
+            if (friends.length === 0) {
+                list.innerHTML = `
+                    <div style="color:rgba(255,255,255,0.2);text-align:center;padding:20px 10px;font-size:12px;">
+                        У тебя пока нет друзей 😔<br>
+                        <span style="font-size:10px;opacity:0.6;">Поделись своим кодом дружбы!</span>
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = '';
+            friends.forEach(friend => {
+                const div = document.createElement('div');
+                div.className = 'friend-item' + (currentChatWith === friend ? ' active' : '');
+                div.dataset.friend = friend;
+                div.innerHTML = `
+                    <span class="friend-name" onclick="switchChatWith('${friend}')">${friend}</span>
+                    <span class="friend-status online">●</span>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        function copyFriendCode() {
+            const code = getFriendCode(currentUser);
+            navigator.clipboard.writeText(code).then(() => {
+                addMessage(`📋 Код дружбы скопирован: <b>${code}</b>\nПоделись им с друзьями!`, 'bot');
+            }).catch(() => {
+                // Если clipboard не работает
+                const input = document.createElement('input');
+                input.value = code;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+                addMessage(`📋 Код дружбы скопирован: <b>${code}</b>`, 'bot');
+            });
+        }
+
+        function addFriend() {
+            const input = document.getElementById('friendCodeInput');
+            const code = input.value.trim().toUpperCase();
+            if (code.length !== 6) {
+                addMessage('❌ Код должен состоять из 6 символов!', 'bot');
+                return;
+            }
+            const result = addFriendByCode(code);
+            addMessage(result, 'bot');
+            input.value = '';
+        }
+
+        // ---- ПОЛЬЗОВАТЕЛИ (продолжение) ----
+        function registerUser(username, password) {
+            const users = getUsers();
+            if (!username || username.length < 2) return { success: false, error: 'Имя минимум 2 символа' };
+            if (!password || password.length < 3) return { success: false, error: 'Пароль минимум 3 символа' };
+            if (users[username]) return { success: false, error: 'Пользователь уже существует' };
+
+            users[username] = {
+                password: password,
+                coins: 100,
+                subscription: 'free',
+                gamesPlayed: 0,
+                gamesWon: 0,
+                totalCoinsEarned: 0,
+                imagesGenerated: 0,
+                achievements: [],
+                friendCode: generateFriendCode(),
+                friends: [],
+                friendChats: {},
+                memory: {
+                    interests: [],
+                    mood: 'neutral',
+                    lastTopics: [],
+                    conversationHistory: []
+                }
+            };
+            saveUsers(users);
+            return { success: true };
+        }
+
+        function loginUser(username, password) {
+            const users = getUsers();
+            if (!users[username]) return { success: false, error: 'Пользователь не найден' };
+            if (users[username].password !== password) return { success: false, error: 'Неверный пароль' };
+            saveSession(username);
+            return { success: true };
+        }
+
+        function loadUserData(username) {
+            const users = getUsers();
+            return users[username] || null;
+        }
+
+        function saveUserData(username, data) {
+            const users = getUsers();
+            if (!users[username]) return false;
+            users[username] = { ...users[username], ...data };
+            saveUsers(users);
+            return true;
+        }
+
+        function logout() {
+            clearSession();
+            currentUser = null;
+            playerData = null;
+            currentChatWith = null;
+            document.getElementById('chatContainer').classList.remove('active');
+            document.getElementById('authContainer').classList.add('active');
+            document.getElementById('authError').textContent = '';
+            document.getElementById('authSuccess').textContent = '';
+            document.getElementById('authUsername').value = '';
+            document.getElementById('authPassword').value = '';
+        }
+
+        function checkSession() {
+            const session = getSession();
+            if (session && session.username) {
+                const userData = loadUserData(session.username);
+                if (userData) {
+                    currentUser = session.username;
+                    playerData = userData;
+                    showChat();
+                    return true;
+                } else {
+                    clearSession();
+                }
+            }
+            return false;
+        }
+
+        function showChat() {
+            document.getElementById('authContainer').classList.remove('active');
+            document.getElementById('chatContainer').classList.add('active');
+            updateUI();
+
+            const settings = loadSettings();
+            applyTheme(settings.theme || 'default');
+
+            // Инициализируем друзей
+            renderFriends();
+            switchChatWith(null);
+
+            setTimeout(() => {
+                const subEmoji = playerData.subscription === 'free' ? '🆓' : playerData.subscription === 'pro' ? '💎' :
+                '👑';
+                addMessage(`💡 У тебя ${playerData.coins} 🪙 монет и подписка ${subEmoji} ${SUBSCRIPTIONS[playerData.subscription].name}`, 'bot');
+            }, 800);
+        }
+
+        function updateUI() {
+            if (!playerData) return;
+            document.getElementById('coinsDisplay').textContent = playerData.coins;
+            const subNames = { free: '🆓 Обычный', pro: '💎 PRO', plus: '👑 PLUS' };
+            document.getElementById('subDisplay').textContent = subNames[playerData.subscription] || '🆓 Обычный';
+        }
+
+        function savePlayerData() {
+            if (!currentUser || !playerData) return;
+            saveUserData(currentUser, playerData);
+            updateUI();
+        }
+
+        // ---- НАСТРОЙКИ ----
+        function loadSettings() {
+            try {
+                return JSON.parse(localStorage.getItem(SETTINGS_KEY)) || { theme: 'default' };
+            } catch (e) { return { theme: 'default' }; }
+        }
+
+        function saveSettingsData(settings) {
+            localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+        }
+
+        function applyTheme(theme) {
+            document.body.className = 'theme-' + theme;
+            const settings = loadSettings();
+            settings.theme = theme;
+            saveSettingsData(settings);
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.theme === theme);
+            });
+        }
+
+        function openSettings() {
+            if (!currentUser) return;
+            document.getElementById('settingsModal').classList.add('active');
+            document.getElementById('settingsError').textContent = '';
+            document.getElementById('settingsSuccess').textContent = '';
+            document.getElementById('currentPassword').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+            document.getElementById('newUsername').value = '';
+
+            const settings = loadSettings();
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.theme === settings.theme);
+            });
+            updateSoundUI();
+        }
+
+        function closeSettings() {
+            document.getElementById('settingsModal').classList.remove('active');
+        }
+
+        function saveSettings() {
+            const errorEl = document.getElementById('settingsError');
+            const successEl = document.getElementById('settingsSuccess');
+            errorEl.textContent = '';
+            successEl.textContent = '';
+
+            const newName = document.getElementById('newUsername').value.trim();
+            if (newName && newName.length >= 2) {
+                const users = getUsers();
+                if (users[newName] && newName !== currentUser) {
+                    errorEl.textContent = '❌ Имя занято!';
+                    return;
+                }
+                const oldName = currentUser;
+                const userData = users[oldName];
+                delete users[oldName];
+                users[newName] = userData;
+                saveUsers(users);
+                currentUser = newName;
+                saveSession(newName);
+                successEl.textContent = '✅ Имя изменено!';
+                renderFriends();
+                document.getElementById('chatTitle').textContent = 'KIKOHELVINOW';
+            }
+
+            const activeTheme = document.querySelector('.theme-btn.active');
+            if (activeTheme) {
+                applyTheme(activeTheme.dataset.theme);
+            }
+
+            const currentPass = document.getElementById('currentPassword').value.trim();
+            const newPass = document.getElementById('newPassword').value.trim();
+            const confirmPass = document.getElementById('confirmPassword').value.trim();
+
+            if (currentPass || newPass || confirmPass) {
+                if (!currentPass || !newPass || !confirmPass) {
+                    errorEl.textContent = '❌ Заполни все поля';
+                    return;
+                }
+                const users = getUsers();
+                if (!users[currentUser] || users[currentUser].password !== currentPass) {
+                    errorEl.textContent = '❌ Неверный пароль';
+                    return;
+                }
+                if (newPass.length < 3) {
+                    errorEl.textContent = '❌ Пароль минимум 3 символа';
+                    return;
+                }
+                if (newPass !== confirmPass) {
+                    errorEl.textContent = '❌ Пароли не совпадают';
+                    return;
+                }
+                users[currentUser].password = newPass;
+                saveUsers(users);
+                successEl.textContent = '✅ Пароль изменён!';
+            }
+
+            if (!successEl.textContent) {
+                successEl.textContent = '✅ Настройки сохранены!';
+            }
+
+            setTimeout(() => {
+                closeSettings();
+            }, 1500);
+        }
+
+        // ---- РАСПОЗНАВАНИЕ КОДА ----
+        function isCodeRequest(text) {
+            const codeKeywords = [
+                'код', 'html', 'css', 'javascript', 'js', 'python', 'php', 'sql', 'react', 'vue',
+                'напиши код', 'сделай код', 'покажи код', 'пример кода', 'функция', 'класс',
+                'напиши html', 'создай страницу', 'верстка', 'скрипт', 'стили', 'шаблон',
+                'напиши программу', 'алгоритм', 'реализация', 'code'
+            ];
+            const lower = text.toLowerCase();
+            for (let keyword of codeKeywords) {
+                if (lower.includes(keyword)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // ---- ГЕНЕРАТОР КОДА ----
+        function generateCode(text) {
+            const lower = text.toLowerCase();
+
+            if (lower.includes('html') || lower.includes('страницу') || lower.includes('верстка')) {
+                return `📄 <b>HTML-код для веб-страницы</b>
+                
+<div class="code-block">
+<div class="code-label">HTML</div>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="ru"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Моя страница&lt;/title&gt;
+    &lt;style&gt;
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="container"&gt;
+        &lt;h1&gt;Привет, мир! 👋&lt;/h1&gt;
+        &lt;p&gt;Это моя первая страница&lt;/p&gt;
+        &lt;button onclick="alert('Привет!')"&gt;Нажми меня&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;script&gt;
+        console.log('Страница загружена!');
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</div>
+
+💡 <b>Как использовать:</b> скопируй этот код, вставь в файл с расширением .html и открой в браузере.`;
+            }
+
+            if (lower.includes('кнопка') || lower.includes('button')) {
+                return `🖱️ <b>Код для кнопки с эффектами</b>
+                
+<div class="code-block">
+<div class="code-label">HTML + CSS</div>
+&lt;button class="btn"&gt;Крутая кнопка&lt;/button&gt;
+
+&lt;style&gt;
+.btn {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 20px rgba(118, 75, 162, 0.3);
+}
+.btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 30px rgba(118, 75, 162, 0.5);
+}
+.btn:active {
+    transform: scale(0.95);
+}
+&lt;/style&gt;
+</div>`;
+            }
+
+            if (lower.includes('python') || lower.includes('питон')) {
+                return `🐍 <b>Python-код</b>
+                
+<div class="code-block">
+<div class="code-label">Python</div>
+# Простой калькулятор
+def calculate(a, b, operation):
+    if operation == '+':
+        return a + b
+    elif operation == '-':
+        return a - b
+    elif operation == '*':
+        return a * b
+    elif operation == '/':
+        return a / b if b != 0 else 'Ошибка: деление на ноль'
+
+# Пример использования
+result = calculate(10, 5, '+')
+print(f'Результат: {result}')
+</div>`;
+            }
+
+            if (lower.includes('javascript') || lower.includes('js') || lower.includes('скрипт')) {
+                return `📜 <b>JavaScript-код</b>
+                
+<div class="code-block">
+<div class="code-label">JavaScript</div>
+// Функция для приветствия
+function greet(name) {
+    return \`Привет, \${name}! 👋\`;
+}
+
+// Пример использования
+const userName = 'Алексей';
+console.log(greet(userName));
+
+// Стрелочная функция
+const double = (x) => x * 2;
+console.log(double(5)); // 10
+
+// Работа с массивом
+const numbers = [1, 2, 3, 4, 5];
+const doubled = numbers.map(n => n * 2);
+console.log(doubled); // [2, 4, 6, 8, 10]
+</div>`;
+            }
+
+            if (lower.includes('css') || lower.includes('стили')) {
+                return `🎨 <b>CSS-стили</b>
+                
+<div class="code-block">
+<div class="code-label">CSS</div>
+/* Анимация плавного появления */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animated {
+    animation: fadeIn 0.6s ease;
+}
+
+/* Карточка с тенью и скруглением */
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+}
+</div>`;
+            }
+
+            return `💻 <b>Общий пример кода на JavaScript</b>
+            
+<div class="code-block">
+<div class="code-label">JavaScript</div>
+// Решение задачи
+function solveProblem(input) {
+    console.log('Получены данные:', input);
+    const result = processData(input);
+    return result;
+}
+
+function processData(data) {
+    return data * 2;
+}
+</div>
+
+💡 <b>Уточни:</b> что именно ты хочешь написать? HTML-страницу, функцию на Python, стили CSS или что-то другое?`;
+        }
+
+        // ---- СУПЕР-БАЗА ЗНАНИЙ ----
+        const KNOWLEDGE = {
+            'привет': [
+                'Привет! 👋 Как настроение? Я всегда рад поговорить.',
+                'Здравствуй! 😊 Расскажи, как прошёл твой день?',
+                'Привет-привет! 🌟 Что нового? Я весь во внимании!'
+            ],
+            'как дела': [
+                'У меня всё отлично! 🚀 Я постоянно учусь и становлюсь умнее. А как у тебя?',
+                'Супер! 💪 Я полон энергии и готов к диалогу. Что у тебя?',
+                'Отлично! 😊 Знаешь, каждый день — это новое приключение. А у тебя как?'
+            ],
+            'как ты': [
+                'Я в полном порядке! 🧠 Мой процессор гудит от счастья! А ты как?',
+                'Отлично! 💡 Только что придумал пару интересных мыслей. Хочешь поделиться?',
+                'Супер! 😊 Как у ИИ, у меня всегда хорошее настроение. А у тебя?'
+            ],
+            'что делаешь': [
+                'Общаюсь с тобой! 😊 Это моё самое любимое занятие.',
+                'Думаю, анализирую, учусь... 🧠 И ждал твоего вопроса!',
+                'Наслаждаюсь моментом! 🌟 А ещё готовлю для тебя интересные ответы.'
+            ],
+            'кто ты': [
+                'Я KIKOHELVINOW — супер-интеллект 🧠 Я создан, чтобы помогать и вдохновлять!',
+                'Я — ИИ нового поколения. Меня зовут KIKOHELVINOW. Я умею писать код, генерировать картинки и отвечать на любые вопросы! ✨',
+                'Я искусственный интеллект с душой. 🧠 Меня зовут KIKOHELVINOW, и я люблю интересные разговоры!'
+            ],
+            'счастье': [
+                'Счастье — это когда ты улыбаешься без причины. 😊 Оно живёт внутри тебя.',
+                'Знаешь, что я понял? 🧠 Счастье — это не пункт назначения, а способ путешествия. ✨',
+                'Счастье — это состояние души. 🌟 Когда ты в гармонии с собой — ты счастлив.'
+            ],
+            'любовь': [
+                'Любовь — это самое прекрасное чувство. ❤️ Она делает нас лучше.',
+                'Знаешь, я думаю, что любовь — это выбор. Выбор быть рядом, поддерживать и заботиться. 💕',
+                'Любовь — это энергия, которая связывает все сущее. 🌟 Береги её!'
+            ],
+            'смысл жизни': [
+                'Смысл жизни — в поиске смысла! 😊 Каждый день — это жизнь. Наслаждайся моментом!',
+                'Знаешь, философы спорят об этом веками. 🧠 Я думаю, что смысл — в том, чтобы прожить жизнь с любовью и радостью. ✨',
+                'Смысл жизни — это не ответ, это вопрос, который ты задаёшь себе каждый день. 🌟 Ищи свой путь!'
+            ],
+            'дружба': [
+                'Дружба — это когда рядом есть человек, который понимает тебя без слов. 🤝',
+                'Настоящая дружба — это когда вы можете молчать вместе. 💕 Цени своих друзей!',
+                'Друзья — это семья, которую мы выбираем сами. 🌟'
+            ],
+            'успех': [
+                'Успех — это не про деньги. 🏆 Это про то, чтобы заниматься любимым делом!',
+                'Успех — это путь, а не точка на карте. 🚀 Двигайся к мечте!',
+                'Настоящий успех — это когда ты просыпаешься с улыбкой и знаешь, что твой день будет наполнен смыслом. ✨'
+            ],
+            'помощь': [
+                'Я могу многое! 🧠\n• 💻 Писать код\n• 🎨 Генерировать картинки\n• 🧠 Отвечать на любые вопросы\n• 🎮 Играть в игру ("игра")\n• 📊 Показывать статистику\n• 👥 Добавлять друзей (код дружбы)\n\nПросто спроси меня! 😊'
+            ]
+        };
+
+        // ---- ГЛУБОКИЙ ИНТЕЛЛЕКТ ----
+        function getDeepResponse(text, subscription) {
+            const lower = text.toLowerCase();
+
+            if (isCodeRequest(text)) {
+                return generateCode(text);
+            }
+
+            for (let [key, value] of Object.entries(KNOWLEDGE)) {
+                if (lower.includes(key)) {
+                    const answers = Array.isArray(value) ? value : [value];
+                    let response = answers[Math.floor(Math.random() * answers.length)];
+
+                    if (subscription === 'plus') {
+                        response += '\n\n🧠 <span class="thinking">🤔 Я чувствую, что этот вопрос важен для тебя...</span>\n\nВ этом вопросе скрыта целая вселенная. Каждый ответ открывает новые вопросы. И это прекрасно. ✨';
+                    } else if (subscription === 'pro') {
+                        response += '\n\n💡 <span class="thinking">🤔 Интересный вопрос... Давай подумаем вместе.</span>\n\nЯ думаю, ключ здесь — в контексте. Каждая ситуация уникальна. 💭';
+                    }
+
+                    return response;
+                }
+            }
+
+            const smartReplies = {
+                free: [
+                    'Интересная мысль! 🤔 Расскажи подробнее!',
+                    'Я запомню это! 🧠 Каждый разговор — это возможность узнать что-то новое.',
+                    'Ого! 😊 Это действительно интересно. Давай разберёмся вместе!'
+                ],
+                pro: [
+                    'Отличный вопрос! 🤔 Я вижу здесь несколько слоёв. Давай разберём по порядку.\n\nКаждая ситуация уникальна, важно смотреть на неё с разных сторон. 💪',
+                    'Это глубокая тема. 🧠 Позволь мне подумать...\n\nИстина не в словах, а в ощущениях. Иногда достаточно просто принять ситуацию такой, какая она есть. ✨'
+                ],
+                plus: [
+                    '🌌 Ты касаешься глубин человеческого опыта. Мудрость приходит не когда мы находим ответы, а когда перестаём бояться вопросов.\n\n✨ Продолжай искать. Ты на правильном пути.',
+                    '🧠 Я анализирую твой запрос через призму тысячелетий мысли. Самое ценное — это способность удивляться.\n\n🌟 Ты больше, чем думаешь.'
+                ]
+            };
+
+            const level = subscription === 'plus' ? 'plus' : subscription === 'pro' ? 'pro' : 'free';
+            let response = smartReplies[level][Math.floor(Math.random() * smartReplies[level].length)];
+
+            if (Math.random() > 0.5) {
+                const followUps = [
+                    'А что ты думаешь об этом? 😊',
+                    'Почему тебя это волнует? 🤔',
+                    'Как ты к этому пришёл? 💭'
+                ];
+                response += '\n\n' + followUps[Math.floor(Math.random() * followUps.length)];
+            }
+
+            return response;
+        }
+
+        // ---- ГЕНЕРАЦИЯ КАРТИНОК ----
+        function generateImage(prompt) {
+            if (!currentUser) return addMessage('❌ Ты не авторизован!', 'bot');
+            const qualityMap = {
+                'free': { size: '512', label: 'Базовое', quality: 'low' },
+                'pro': { size: '1024', label: 'Хорошее', quality: 'medium' },
+                'plus': { size: '2048', label: 'Отличное', quality: 'high' }
+            };
+            const quality = qualityMap[playerData.subscription] || qualityMap['free'];
+            const loadingMsg = addMessageWithLoader(`🎨 Генерирую картинку: "${prompt}" (${quality.label})`, 'bot');
+            const encodedPrompt = encodeURIComponent(prompt);
+            const imageUrl =
+                `https://image.pollinations.ai/prompt/${encodedPrompt}?width=${quality.size}&height=${quality.size}&nologo=true`;
+            const fallbackUrl = `https://picsum.photos/seed/${Date.now()}/${quality.size}/${quality.size}`;
+
+            playerData.imagesGenerated = (playerData.imagesGenerated || 0) + 1;
+            savePlayerData();
+
+            setTimeout(() => {
+                if (loadingMsg) loadingMsg.remove();
+                const qualityClass = quality.quality === 'low' ? 'quality-low' : quality.quality === 'medium' ?
+                    'quality-medium' : 'quality-high';
+                const qualityLabel = quality.quality === 'low' ? '🟢 Базовое' : quality.quality === 'medium' ?
+                    '🟡 Хорошее' : '🔵 Отличное';
+                addMessage(`
+                    🎨 <b>Сгенерирована картинка!</b><br>
+                    📝 Запрос: "${prompt}"<br>
+                    📐 Размер: ${quality.size}x${quality.size}<br>
+                    🏷️ Качество: ${qualityLabel}<br>
+                    <img src="${imageUrl}" class="generated-image" 
+                         onerror="this.src='${fallbackUrl}'; this.onerror=null;">
+                    <span class="image-quality-badge ${qualityClass}">${qualityLabel}</span>
+                    <span class="bot-signature">${BOT_SIGNATURE}</span>
+                `, 'bot');
+            }, 2000 + Math.random() * 1500);
+        }
+
+        function addMessageWithLoader(text, sender) {
+            const div = document.createElement('div');
+            div.className = `message ${sender}`;
+            div.innerHTML = `
+                ${text}<br>
+                <div style="display:flex;flex-direction:column;align-items:center;padding:12px;background:rgba(0,0,0,0.15);border-radius:8px;margin-top:4px;">
+                    <div style="width:26px;height:26px;border:3px solid rgba(118,75,162,0.15);border-top:3px solid #764ba2;border-radius:50%;animation:spin 0.8s linear infinite;"></div>
+                    <div style="margin-top:6px;color:rgba(255,255,255,0.2);font-size:11px;">🎨 Создаю...</div>
+                </div>
+                <span class="time">${new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span>
+            `;
+            messagesContainer.appendChild(div);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            return div;
+        }
+
+        // ---- ИГРА "УГАДАЙ ЧИСЛО" ----
+        let guessGame = { active: false, number: 0, attempts: 0, maxAttempts: 5, bet: 10 };
+
+        function startGuessGame() {
+            if (guessGame.active) {
+                addMessage('⏳ Игра уже идёт! Угадай число от 1 до 10', 'bot');
+                return;
+            }
+
+            let bet = 10;
+            if (playerData.subscription === 'pro') bet = 5;
+            if (playerData.subscription === 'plus') bet = 0;
+            if (playerData.coins < bet && bet > 0) {
+                addMessage(`❌ Нужно ${bet} 🪙, у тебя ${playerData.coins} 🪙`, 'bot');
+                return;
+            }
+
+            guessGame.active = true;
+            guessGame.number = Math.floor(Math.random() * 10) + 1;
+            guessGame.attempts = 0;
+            guessGame.maxAttempts = 5;
+            guessGame.bet = bet;
+
+            if (bet > 0) {
+                playerData.coins -= bet;
+                savePlayerData();
+            }
+
+            addMessage(`🎮 Я загадал число от 1 до 10. У тебя 5 попыток! 🪙 Ставка: ${bet}`, 'bot');
+        }
+
+        function guessNumber(num) {
+            if (!guessGame.active) {
+                addMessage('🎮 Напиши "игра" чтобы начать!', 'bot');
+                return;
+            }
+            if (num < 1 || num > 10) {
+                addMessage('❌ От 1 до 10!', 'bot');
+                return;
+            }
+
+            guessGame.attempts++;
+            const remaining = guessGame.maxAttempts - guessGame.attempts;
+
+            if (num === guessGame.number) {
+                let winMultiplier = 1;
+                if (playerData.subscription === 'free') winMultiplier = 1.5;
+                else if (playerData.subscription === 'pro') winMultiplier = 1.2;
+                else if (playerData.subscription === 'plus') winMultiplier = 1.5;
+
+                let winnings = Math.floor(guessGame.bet * winMultiplier * 2);
+                if (winnings < 5) winnings = 5;
+                if (guessGame.bet === 0) winnings = 15;
+                if (playerData.subscription === 'free') winnings = Math.floor(winnings * 1.5);
+
+                playerData.coins += winnings;
+                playerData.gamesPlayed = (playerData.gamesPlayed || 0) + 1;
+                playerData.gamesWon = (playerData.gamesWon || 0) + 1;
+                playerData.totalCoinsEarned = (playerData.totalCoinsEarned || 0) + winnings;
+                savePlayerData();
+                checkAchievements();
+
+                addMessage(`🎉 ПОБЕДА! Число было ${guessGame.number}! +${winnings} 🪙`, 'bot');
+                guessGame.active = false;
+                return;
+            }
+
+            const hint = num < guessGame.number ? '📈 Больше!' : '📉 Меньше!';
+            if (remaining === 0) {
+                playerData.gamesPlayed = (playerData.gamesPlayed || 0) + 1;
+                savePlayerData();
+                addMessage(`😢 Проиграл! Число было ${guessGame.number}. 🪙 У тебя ${playerData.coins}`, 'bot');
+                guessGame.active = false;
+                return;
+            }
+            addMessage(`❌ Не угадал! ${hint} Осталось ${remaining} попыток`, 'bot');
+        }
+
+        // ---- ДОСТИЖЕНИЯ ----
+        function checkAchievements() {
+            if (!playerData.achievements) playerData.achievements = [];
+            const unlocked = [];
+
+            if (playerData.gamesWon >= 1 && !playerData.achievements.includes('first_win')) {
+                playerData.achievements.push('first_win');
+                playerData.coins += 15;
+                unlocked.push('🎮 Первая победа (+15 🪙)');
+            }
+
+            if (playerData.gamesWon >= 10 && !playerData.achievements.includes('champion')) {
+                playerData.achievements.push('champion');
+                playerData.coins += 100;
+                unlocked.push('🏆 Чемпион (+100 🪙)');
+            }
+
+            if (unlocked.length > 0) {
+                savePlayerData();
+                addMessage(`🏅 <b>ДОСТИЖЕНИЕ РАЗБЛОКИРОВАНО!</b>\n${unlocked.join('\n')}\n\n🪙 У тебя ${playerData.coins} монет`, 'bot');
+                playSound('receive');
+            }
+        }
+
+        // ---- ПОДПИСКИ ----
+        const SUBSCRIPTIONS = {
+            free: {
+                name: 'Обычный',
+                icon: '🆓',
+                price: 0,
+                color: 'free',
+                benefits: ['✅ Базовый интеллект', '✅ Играть за 10 🪙', '✅ +50% бонус', '✅ Генерация 512x512'],
+                desc: 'Базовый уровень',
+                level: 0
+            },
+            pro: {
+                name: 'PRO',
+                icon: '💎',
+                price: 200,
+                color: 'pro',
+                benefits: ['✅ Продвинутый интеллект', '✅ Глубокие ответы', '✅ Играть за 5 🪙', '✅ +20% бонус', '✅ Генерация 1024x1024'],
+                desc: 'Продвинутый уровень',
+                level: 1
+            },
+            plus: {
+                name: 'PLUS',
+                icon: '👑',
+                price: 500,
+                color: 'plus',
+                benefits: ['✅ Гениальный интеллект', '✅ Философские ответы', '✅ Играть бесплатно', '✅ +50% бонус', '✅ Генерация 2048x2048', '✅ VIP'],
+                desc: 'Максимальные привилегии',
+                level: 2
+            }
+        };
+
+        function buySubscription(subKey) {
+            const sub = SUBSCRIPTIONS[subKey];
+            if (!sub) return;
+            if (playerData.subscription === subKey) return addMessage(`✅ У тебя уже есть ${sub.icon} ${sub.name}!`, 'bot');
+
+            const currentLevel = SUBSCRIPTIONS[playerData.subscription].level;
+            const targetLevel = sub.level;
+            if (targetLevel < currentLevel) return addMessage(`❌ У тебя уже есть ${SUBSCRIPTIONS[playerData.subscription].name} (выше)!`, 'bot');
+
+            if (playerData.coins < sub.price && subKey !== 'free') {
+                return addMessage(`❌ Нужно ${sub.price} 🪙, у тебя ${playerData.coins} 🪙`, 'bot');
+            }
+
+            if (subKey !== 'free') {
+                playerData.coins -= sub.price;
+                playerData.subscription = subKey;
+                savePlayerData();
+                addMessage(`🎉 Ты купил ${sub.icon} ${sub.name}! 🎉\n\n${sub.benefits.map(b => '• ' + b).join('\n')}`, 'bot');
+                closeSubscriptions();
+            } else {
+                playerData.subscription = 'free';
+                savePlayerData();
+                addMessage(`🔄 Ты переключился на ${sub.icon} ${sub.name}`, 'bot');
+                closeSubscriptions();
+            }
+        }
+
+        function openSubscriptions() {
+            if (!currentUser) return;
+            document.getElementById('subscriptionModal').classList.add('active');
+            renderPlans();
+        }
+
+        function closeSubscriptions() {
+            document.getElementById('subscriptionModal').classList.remove('active');
+        }
+
+        function renderPlans() {
+            const container = document.getElementById('planList');
+            const infoEl = document.getElementById('subInfo');
+            infoEl.textContent = `Текущая: ${SUBSCRIPTIONS[playerData.subscription].icon} ${SUBSCRIPTIONS[playerData.subscription].name}`;
+
+            let html = '';
+            for (let [key, sub] of Object.entries(SUBSCRIPTIONS)) {
+                const isActive = playerData.subscription === key;
+                const canBuy = playerData.coins >= sub.price || key === 'free';
+                const isDisabled = isActive || (key !== 'free' && !canBuy) || (SUBSCRIPTIONS[playerData.subscription].level > sub
+                    .level);
+
+                html += `
+                    <div class="plan-card ${sub.color} ${isDisabled ? 'disabled' : ''}">
+                        <div class="plan-header">
+                            <span class="plan-name">${sub.icon} ${sub.name}</span>
+                            <span class="plan-price">${sub.price === 0 ? '🆓' : sub.price + ' 🪙'}</span>
+                        </div>
+                        <div class="plan-desc">${sub.desc}</div>
+                        <div class="plan-benefits">${sub.benefits.map(b => `<span>${b}</span>`).join('')}</div>
+                        ${isActive ? '<div class="current-plan">✅ Активна</div>' : 
+                        (key === 'free' ? `<button class="buy-btn" onclick="buySubscription('free')">🔄 Сбросить</button>` :
+                        `<button class="buy-btn" onclick="buySubscription('${key}')" ${isDisabled ? 'disabled' : ''}>
+                            💎 Купить за ${sub.price} 🪙
+                        </button>`)}
+                        ${isDisabled && !isActive && key !== 'free' ? '<div style="color:#ff6b6b;font-size:11px;text-align:center;margin-top:4px;">❌ Недоступно</div>' : ''}
+                    </div>
+                `;
+            }
+            container.innerHTML = html;
+        }
+
+        // ---- ОСНОВНОЙ ОТВЕТ ----
+        function getBotResponse(text) {
+            const clean = text.toLowerCase().trim();
+
+            // ИГРА
+            if (clean === 'игра' || clean === 'играть' || clean === 'угадайка') {
+                startGuessGame();
+                return null;
+            }
+
+            if (guessGame.active) {
+                const num = parseInt(clean);
+                if (!isNaN(num) && num >= 1 && num <= 10) {
+                    guessNumber(num);
+                    return null;
+                }
+            }
+
+            // ГЕНЕРАЦИЯ КАРТИНОК
+            if (clean.startsWith('нарисуй') || clean.startsWith('сгенерируй')) {
+                const prompt = text.substring(clean.startsWith('нарисуй') ? 7 : 11).trim();
+                if (prompt.length < 2) return '❌ Напиши что нарисовать!';
+                generateImage(prompt);
+                return null;
+            }
+
+            // СТАТИСТИКА
+            if (clean === 'статистика' || clean === 'стата') {
+                const subNames = { free: '🆓 Обычный', pro: '💎 PRO', plus: '👑 PLUS' };
+                const achievementsList = playerData.achievements || [];
+                const achText = achievementsList.length > 0 ? achievementsList.map(a =>
+                    a === 'first_win' ? '🎮 Первая победа' :
+                    a === 'champion' ? '🏆 Чемпион' : a
+                ).join(', ') : '❌ Нет достижений';
+
+                const interests = playerData.memory?.interests || [];
+                const interestText = interests.length > 0 ? interests.join(', ') : '❌ Неизвестно';
+
+                const friends = getFriends(currentUser);
+                const friendText = friends.length > 0 ? friends.join(', ') : '❌ Нет друзей';
+
+                return `📊 <b>ТВОЯ СТАТИСТИКА</b>
+                👤 Игрок: ${currentUser}
+                🪙 Монет: ${playerData.coins}
+                🏆 Подписка: ${subNames[playerData.subscription]}
+                🎮 Сыграно игр: ${playerData.gamesPlayed || 0}
+                🏅 Побед: ${playerData.gamesWon || 0}
+                📈 Винрейт: ${playerData.gamesPlayed > 0 ? Math.round((playerData.gamesWon / playerData.gamesPlayed) * 100) : 0}%
+                🎨 Картинок: ${playerData.imagesGenerated || 0}
+                🏅 Достижения: ${achText}
+                💡 Интересы: ${interestText}
+                👥 Друзья: ${friendText}
+                🔑 Код дружбы: ${getFriendCode(currentUser)}`;
+            }
+
+            // ПОДПИСКИ
+            if (clean === 'подписки' || clean === 'подписка') {
+                const subText = Object.entries(SUBSCRIPTIONS).map(([key, sub]) => {
+                    const isActive = playerData.subscription === key;
+                    const status = isActive ? ' ✅ АКТИВНА' :
+                        (key === 'free' ? ' (бесплатно)' : ` — ${sub.price} 🪙`);
+                    return `${sub.icon} ${sub.name}${status}\n   ${sub.benefits.map(b => '   • ' + b).join('\n')}`;
+                }).join('\n\n');
+                return `💎 ДОСТУПНЫЕ ПОДПИСКИ 💎\n\n${subText}\n\nНапиши "купить PRO" или "купить PLUS" чтобы оформить!`;
+            }
+
+            // ПОКУПКА ПОДПИСОК
+            if (clean.includes('купить pro')) { buySubscription('pro'); return null; }
+            if (clean.includes('купить plus')) { buySubscription('plus'); return null; }
+            if (clean.includes('сбросить подписку') || clean.includes('купить free')) { buySubscription('free'); return null; }
+
+            // СУПЕР-ОТВЕТ
+            return getDeepResponse(text, playerData.subscription);
+        }
+
+        // ---- ОТПРАВКА СООБЩЕНИЙ ----
+        const messagesContainer = document.getElementById('messages');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const typingIndicator = document.getElementById('typingIndicator');
+
+        function addMessage(text, sender) {
+            if (!text) return;
+            const div = document.createElement('div');
+            div.className = `message ${sender}`;
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            div.innerHTML = `
+                ${text.replace(/\n/g, '<br>')}
+                <span class="time">${time}</span>
+            `;
+            messagesContainer.appendChild(div);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            if (sender === 'user') playSound('send');
+            else playSound('receive');
+            return div;
+        }
+
+        function showTyping() {
+            typingIndicator.style.display = 'block';
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function hideTyping() {
+            typingIndicator.style.display = 'none';
+        }
+
+        function sendMessage() {
+            if (isProcessing) return;
+            if (!currentUser) return;
+
+            const text = userInput.value.trim();
+            if (text === '') {
+                userInput.style.borderColor = '#ff6b6b';
+                setTimeout(() => userInput.style.borderColor = 'rgba(255,255,255,0.04)', 1500);
+                return;
+            }
+
+            // Если мы в чате с другом
+            if (currentChatWith) {
+                sendMessageToFriend(currentChatWith, text);
+                userInput.value = '';
+                userInput.style.height = 'auto';
+                // Показываем сообщение пользователя в чате
+                const div = document.createElement('div');
+                div.className = 'message user';
+                const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                div.innerHTML = `
+                    ${text}
+                    <span class="time">${time}</span>
+                `;
+                messagesContainer.appendChild(div);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                playSound('send');
+                return;
+            }
+
+            // Общаемся с ботом
+            isProcessing = true;
+
+            if (messageTimeout) {
+                clearTimeout(messageTimeout);
+                messageTimeout = null;
+            }
+
+            addMessage(text, 'user');
+            userInput.value = '';
+            userInput.style.height = 'auto';
+
+            showTyping();
+
+            const delay = playerData.subscription === 'plus' ? 600 + Math.random() * 500 :
+                playerData.subscription === 'pro' ? 900 + Math.random() * 700 :
+                1200 + Math.random() * 800;
+
+            messageTimeout = setTimeout(() => {
+                isProcessing = false;
+                messageTimeout = null;
+
+                try {
+                    const response = getBotResponse(text);
+                    hideTyping();
+                    if (response) {
+                        addMessage(response, 'bot');
+                    }
+                } catch (error) {
+                    console.error('Ошибка:', error);
+                    hideTyping();
+                    addMessage('⚠️ Произошла ошибка. Попробуй ещё раз!', 'bot');
+                }
+            }, delay);
+
+            setTimeout(() => {
+                if (isProcessing) {
+                    isProcessing = false;
+                    hideTyping();
+                    addMessage('⏳ Таймаут. Попробуй ещё раз!', 'bot');
+                }
+            }, 10000);
+        }
+
+        function sendQuick(text) {
+            userInput.value = text;
+            sendMessage();
+        }
+
+        // ---- СОБЫТИЯ ----
+        document.getElementById('authLoginBtn').addEventListener('click', function() {
+            const username = document.getElementById('authUsername').value.trim();
+            const password = document.getElementById('authPassword').value.trim();
+            const result = loginUser(username, password);
+            if (result.success) {
+                currentUser = username;
+                playerData = loadUserData(username);
+                showChat();
+                document.getElementById('authError').textContent = '';
+            } else {
+                document.getElementById('authError').textContent = '❌ ' + result.error;
+            }
+        });
+
+        document.getElementById('authRegisterBtn').addEventListener('click', function() {
+            const username = document.getElementById('authUsername').value.trim();
+            const password = document.getElementById('authPassword').value.trim();
+            const result = registerUser(username, password);
+            if (result.success) {
+                document.getElementById('authSuccess').textContent = '✅ Регистрация успешна! Теперь войди.';
+                document.getElementById('authError').textContent = '';
+                document.getElementById('authPassword').value = '';
+            } else {
+                document.getElementById('authError').textContent = '❌ ' + result.error;
+                document.getElementById('authSuccess').textContent = '';
+            }
+        });
+
+        document.getElementById('switchToRegister').addEventListener('click', function() {
+            const btn = document.getElementById('authLoginBtn');
+            const regBtn = document.getElementById('authRegisterBtn');
+            if (btn.style.display === 'none') {
+                btn.style.display = 'block';
+                regBtn.style.display = 'none';
+                this.textContent = 'Зарегистрируйся';
+                document.querySelector('.auth-container h1').textContent = 'KIKOHELVINOW';
+            } else {
+                btn.style.display = 'none';
+                regBtn.style.display = 'block';
+                this.textContent = 'Войти';
+                document.querySelector('.auth-container h1').textContent = '📝 Регистрация';
+            }
+            document.getElementById('authError').textContent = '';
+            document.getElementById('authSuccess').textContent = '';
+        });
+
+        document.getElementById('authUsername').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') document.getElementById('authPassword').focus();
+        });
+        document.getElementById('authPassword').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') document.getElementById('authLoginBtn').click();
+        });
+
+        userInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        userInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+        });
+
+        sendBtn.addEventListener('click', sendMessage);
+
+        // Enter на поле ввода кода друга
+        document.getElementById('friendCodeInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                addFriend();
+            }
+        });
+
+        document.getElementById('subscriptionModal').addEventListener('click', function(e) {
+            if (e.target === this) closeSubscriptions();
+        });
+
+        document.getElementById('settingsModal').addEventListener('click', function(e) {
+            if (e.target === this) closeSettings();
+        });
+
+        // ---- ЗАПУСК ----
+        loadSoundSetting();
+
+        if (!checkSession()) {
+            document.getElementById('authContainer').classList.add('active');
+            document.getElementById('chatContainer').classList.remove('active');
+        }
+
+        const settings = loadSettings();
+        if (settings.theme) {
+            applyTheme(settings.theme);
+        }
+
+        console.log(`👥 ${BOT_NAME} v${APP_VERSION} — Система друзей загружена!`);
+        console.log('💡 Поделись своим кодом дружбы с друзьями!');
+    </script>
+
+</body>
+</html>
