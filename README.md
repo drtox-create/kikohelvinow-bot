@@ -1,2 +1,2 @@
-# kikohelvinow-bot V1.1! (new)
+# kikohelvinow-bot V1.1!  (beta)
 Искусственный интеллект KIKOHELVINOW
